@@ -1,9 +1,9 @@
 package com.tatho.domain
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "body_measurements")
+//import androidx.room.Entity
+//import androidx.room.PrimaryKey
+//
+//@Entity(tableName = "body_measurements")
 data class BodyMeasurement(
     val chest: Float,
     val waist: Float,
@@ -11,6 +11,6 @@ data class BodyMeasurement(
     val glute: Float,
     val back: Float
 ) {
-    @PrimaryKey(autoGenerate = true)
+//    @PrimaryKey(autoGenerate = true)
     var id: Long = 0
 }

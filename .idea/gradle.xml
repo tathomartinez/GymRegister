@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/app/RegisterSize" />
             <option value="$PROJECT_DIR$/app/RegisterSize/data" />
             <option value="$PROJECT_DIR$/app/RegisterSize/domain" />
+            <option value="$PROJECT_DIR$/app/RegisterSize/presentation" />
           </set>
         </option>
       </GradleProjectSettings>

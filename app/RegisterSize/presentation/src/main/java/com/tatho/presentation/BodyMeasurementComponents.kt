@@ -25,18 +25,18 @@ import com.tatho.presentation.constans.UiConstants.REGISTRAMEDIDAS
 import com.tatho.presentation.constans.UiConstants.SAVE
 import com.tatho.presentation.constans.UiConstants.WAIST
 
-@Preview
-@Composable
-fun DefaultPreview() {
-    val navController = rememberNavController()
-    BodyMeasurementScreen {
-        _navController()
-    }
-}
-
-fun _navController() {
-    TODO("Not yet implemented")
-}
+//@Preview
+//@Composable
+//fun DefaultPreview() {
+//    val navController = rememberNavController()
+//    BodyMeasurementScreen {
+//        _navController()
+//    }
+//}
+//
+//fun _navController() {
+//    TODO("Not yet implemented")
+//}
 
 @Composable
 fun BodyMeasurementScreen(navNext: () -> Unit) {

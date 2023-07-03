@@ -12,6 +12,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/app/Common" />
+            <option value="$PROJECT_DIR$/app/Menu" />
+            <option value="$PROJECT_DIR$/app/Menu/presentation" />
             <option value="$PROJECT_DIR$/app/RegisterSize" />
             <option value="$PROJECT_DIR$/app/RegisterSize/data" />
             <option value="$PROJECT_DIR$/app/RegisterSize/domain" />

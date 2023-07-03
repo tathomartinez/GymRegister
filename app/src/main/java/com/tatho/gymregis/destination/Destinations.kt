@@ -30,7 +30,7 @@ fun NavigationHost() {
 
         }
         composable(Destinations.BodyMeasurement.route) {
-            BodyMeasurementScreen()
+            BodyMeasurementScreen { navController.navigate(Destinations.Main.route) }
         }
     }
 }

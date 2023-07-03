@@ -17,14 +17,14 @@ import com.tatho.common.theme.BackGroundColor
 import com.tatho.gymregis.R
 
 
-@Preview
-@Composable
-fun DefaultPreview() {
-    val navController = rememberNavController()
-    SingUpScreen {
-        _navController()
-    }
-}
+//@Preview
+//@Composable
+//fun DefaultPreview() {
+//    val navController = rememberNavController()
+//    SingUpScreen {
+//        _navController()
+//    }
+//}
 
 fun _navController() {
 }
@@ -44,7 +44,6 @@ fun SingUpScreen(navNext: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-//                .background(BackGroundColor)
                 .constrainAs(screen) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start, margin = 28.dp)

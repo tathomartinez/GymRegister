@@ -34,6 +34,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.compose.rememberNavController
 import com.tatho.gymregis.R
 import com.tatho.gymregis.ui.theme.*
@@ -60,58 +61,87 @@ fun NormalTextComponent(value: String) {
 fun DefaultPreview() {
     val navController = rememberNavController()
     SingUpScreen {
-        navController
+        _navController()
     }
+}
+
+fun _navController() {
 }
 
 @Composable
 fun SingUpScreen(navNext: () -> Unit) {
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
+
+    ConstraintLayout(
+        modifier =
+        Modifier
+//            .padding(28.dp)
             .background(BackGroundColor)
-            .padding(28.dp)
     ) {
-        Column(
+
+        val (screen, btnRegister) = createRefs()
+
+        Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(BackGroundColor)
+                .fillMaxHeight()
+//                .background(BackGroundColor)
+                .constrainAs(screen) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start, margin = 28.dp)
+                    end.linkTo(parent.end, margin = 28.dp)
+                    bottom.linkTo(parent.bottom)
+                }
         ) {
-            NormalTextComponent(value = stringResource(id = R.string.greeting))
-            HeaderTextComponent(value = stringResource(id = R.string.createAccountText))
-            Spacer(modifier = Modifier.height(24.dp))
-            GymEmailFieldComponent(
-                label = stringResource(id = R.string.email), icon =
-                Icons.Default.AccountCircle,
-                contentDescription = "any"
-            )
-            GymPasswordTextFieldComponent(
-                label = stringResource(id = R.string.password)
-            )
-            GymPasswordTextFieldComponent(
-                label = stringResource(id = R.string.repetPassword)
-            )
-            CheckboxComponent("Hola", onTextSelected = {
-                //TODO evento del viewmodel
-            }, onCheckedChange = {
-                //TODO evento del viewmodel
-                //TODO Cuando este cambie debe pasarse al componente button para activar o desactivar el boton
-            })
-            Spacer(modifier = Modifier.height(48.dp))
-            ButtonComponent(
-                value = stringResource(id = R.string.singUp),
-                onButtonClicked = {
-                    //TODO if es enable crear if
-                    navNext()
-                },
-                isEnabled = true,
+            Column(
                 modifier = Modifier
-                    .padding(10.dp)
-                    .align(Alignment.End)
-            )
+                    .fillMaxWidth()
+                    .background(BackGroundColor)
+            ) {
+                NormalTextComponent(value = stringResource(id = R.string.greeting))
+                HeaderTextComponent(value = stringResource(id = R.string.createAccountText))
+                Spacer(modifier = Modifier.height(24.dp))
+                GymEmailFieldComponent(
+                    label = stringResource(id = R.string.email), icon =
+                    Icons.Default.AccountCircle,
+                    contentDescription = "any"
+                )
+                GymPasswordTextFieldComponent(
+                    label = stringResource(id = R.string.password)
+                )
+                GymPasswordTextFieldComponent(
+                    label = stringResource(id = R.string.repetPassword)
+                )
+                CheckboxComponent("Hola", onTextSelected = {
+                    //TODO evento del viewmodel
+                }, onCheckedChange = {
+                    //TODO evento del viewmodel
+                    //TODO Cuando este cambie debe pasarse al componente button para activar o desactivar el boton
+                })
+                Spacer(modifier = Modifier.height(48.dp))
+
+            }
+
+
         }
+
+        ButtonComponent(
+            value = stringResource(id = R.string.singUp),
+            onButtonClicked = {
+                navNext()
+            },
+            isEnabled = true,
+            modifier = Modifier
+//                .fillMaxWidth()
+                .constrainAs(btnRegister) {
+//                    top.linkTo(screen.bottom)
+                    start.linkTo(parent.start, margin = 24.dp)
+                    end.linkTo(parent.end, margin = 24.dp)
+                    bottom.linkTo(parent.bottom, margin = 24.dp)
+
+                }
+        )
     }
+
 }
 
 
@@ -326,7 +356,7 @@ fun ButtonComponent(
         },
         contentPadding = PaddingValues(),
         colors = ButtonDefaults.buttonColors(Color.Transparent),
-        shape = RoundedCornerShape(50.dp),
+//        shape = RoundedCornerShape(50.dp),
         enabled = isEnabled
     ) {
         Box(
@@ -335,7 +365,7 @@ fun ButtonComponent(
                 .heightIn(48.dp)
                 .background(
                     brush = Brush.horizontalGradient(listOf(PrimaryColor, PrimaryAntonColor)),
-                    shape = RoundedCornerShape(50.dp)
+//                    shape = RoundedCornerShape(50.dp)
                 ),
             contentAlignment = Alignment.Center
         ) {

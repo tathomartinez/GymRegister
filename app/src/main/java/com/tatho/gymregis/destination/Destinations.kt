@@ -27,16 +27,12 @@ fun NavigationHost() {
         startDestination = Destinations.Login.route
     ) {
         composable(Destinations.Login.route) {
-//            LoginScreen {
-//                navController.navigate(Destinations.Main.route)
-//            }
             SingUpScreen{navController.navigate(Destinations.Main.route)}
-//            NormalTextComponent()
-        }
-        composable(Destinations.BodyMeasurementForm.route) {
-
         }
         composable(Destinations.Main.route) {
+
+        }
+        composable(Destinations.BodyMeasurementForm.route) {
 
         }
     }

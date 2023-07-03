@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gymregis</string>
+    <string name="greeting">Bienvenidos !!!</string>
+    <string name="createAccountText">Create una cuenta</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="repetPassword">Repite la password</string>
+    <string name="hidePasswoerd">Ocultar password</string>
+    <string name="showPasswoerd">Mostrar password</string>
+    <string name="singUp">Registar</string>
+</resources>

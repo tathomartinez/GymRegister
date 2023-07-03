@@ -1,4 +1,4 @@
-package com.tatho.gymregis.ui.theme
+package com.tatho.common.theme
 
 import androidx.compose.ui.graphics.Color
 

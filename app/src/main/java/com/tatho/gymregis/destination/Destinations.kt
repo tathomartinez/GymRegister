@@ -22,12 +22,15 @@ sealed class Destinations(
 fun NavigationHost() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Destinations.Login.route) {
+    NavHost(
+        navController = navController,
+        startDestination = Destinations.Login.route
+    ) {
         composable(Destinations.Login.route) {
 //            LoginScreen {
 //                navController.navigate(Destinations.Main.route)
 //            }
-            SingUpScreen()
+            SingUpScreen{navController.navigate(Destinations.Main.route)}
 //            NormalTextComponent()
         }
         composable(Destinations.BodyMeasurementForm.route) {

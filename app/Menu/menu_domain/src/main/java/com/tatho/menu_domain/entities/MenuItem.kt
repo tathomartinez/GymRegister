@@ -1,13 +1,13 @@
 package com.tatho.menu_domain.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "menu")
 data class MenuItem(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    val title: String,
-    val subtitle: String,
-    val role: String? = "0"
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Long = 0,
+    @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "subtitle") val subtitle: String,
+    @ColumnInfo(name = "role") val role: String? = "0"
 )
-

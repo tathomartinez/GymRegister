@@ -13,8 +13,10 @@ import com.tatho.menu_domain.entities.MenuItem
 abstract class AppDatabase : RoomDatabase() {
     companion object {
         fun getInstance(context: Context): AppDatabase {
-            return Room.databaseBuilder(context, AppDatabase::class.java, "app_db")
-                .fallbackToDestructiveMigration().build()
+            return Room.databaseBuilder(context, AppDatabase::class.java, "GymRegis")
+                .fallbackToDestructiveMigration()
+                .createFromAsset(databaseFilePath = "databases/gymresgisterdatabase.db")
+                .build()
         }
     }
 

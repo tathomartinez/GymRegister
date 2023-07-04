@@ -31,10 +31,10 @@ class MenuViewModel @Inject constructor(private val getListMenuItemsByRolUseCase
                     _menuItems.value = MenuState(isLoading = true)
                 }
                 is Resource.Error -> {
-
+                    Log.e("llego", "llego aca algun error ${it.message}")
                 }
                 is Resource.Success -> {
-                    Log.e("llego", "llego aca")
+                    Log.e("llego", "llego aca ${it.data}")
                     _menuItems.value = MenuState(data = it.data)
                 }
             }

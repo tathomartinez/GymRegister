@@ -1,18 +1,14 @@
 package com.tatho.gymregis.destination
 
-//import com.tatho.menu_data.mapper.toDto
-import android.util.Log
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.tatho.gymregis.presentations.components.SingUpScreen
 import com.tatho.menu_data.mapper.toDto
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.tatho.presentation.BodyMeasurementScreen
 import com.tatho.presentation.MenuScreen
 import com.tatho.presentation.MenuViewModel
@@ -26,7 +22,7 @@ sealed class Destinations(
 }
 
 @Composable
-fun NavigationHost(viewModel: MenuViewModel) {
+fun NavigationHost() {
     val navController = rememberNavController()
 
     NavHost(
@@ -37,12 +33,10 @@ fun NavigationHost(viewModel: MenuViewModel) {
             SingUpScreen { navController.navigate(Destinations.Main.route) }
         }
         composable(Destinations.Main.route) {
+            val viewModel: MenuViewModel = hiltViewModel<MenuViewModel>()
 
             MenuScreen(
-                { Destinations.BodyMeasurement.route },
-                 viewModel.menuItems.collectAsState().value.data?.map {
-                    it.toDto()
-                } ?: emptyList()
+                { Destinations.BodyMeasurement.route}, viewModel = viewModel ,
             )
 
         }

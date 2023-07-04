@@ -1,6 +1,5 @@
 package com.tatho.presentation
 
-import com.tatho.menu_data.model.MenuItemDto
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,6 +11,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,9 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tatho.common.theme.BackGroundLightColor
-
 
 @Composable
 fun ItemMenu(title: String, subtitle: String) {
@@ -103,18 +102,26 @@ fun ItemMenuSubtitle(subtitle: String) {
 
 
 @Composable
-fun MenuScreen(navNext: () -> Unit, itemMenuList: List<MenuItemDto>) {
+fun MenuScreen(navNext: () -> Unit, viewModel: MenuViewModel) {
     ConstraintLayout(
         modifier =
         Modifier
             .background(BackGroundLightColor)
             .fillMaxSize()
     ) {
+        val menuItemsState by viewModel.menuItems.collectAsState()
 
-        LazyColumn {
-            items(itemMenuList) { menuItem ->
-                ItemMenu(menuItem.title, menuItem.subtitle)
+        menuItemsState.data?.let { data ->
+            LazyColumn {
+                items(data) { menuItem ->
+                    ItemMenu(menuItem.title, menuItem.subtitle)
+                }
             }
         }
+//        LazyColumn {
+//            items(itemMenuList) { menuItem ->
+//                ItemMenu(menuItem.title, menuItem.subtitle)
+//            }
+//        }
     }
 }

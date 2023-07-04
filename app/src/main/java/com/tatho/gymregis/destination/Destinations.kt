@@ -5,7 +5,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.tatho.gymregis.presentations.components.SingUpScreen
+import com.tatho.menu_data.model.MenuItem
 import com.tatho.presentation.BodyMeasurementScreen
+import com.tatho.presentation.MenuScreen
 
 sealed class Destinations(
     val route: String
@@ -27,7 +29,7 @@ fun NavigationHost() {
             SingUpScreen { navController.navigate(Destinations.BodyMeasurement.route) }
         }
         composable(Destinations.Main.route) {
-
+            MenuScreen({}, emptyList<MenuItem>())
         }
         composable(Destinations.BodyMeasurement.route) {
             BodyMeasurementScreen { navController.navigate(Destinations.Main.route) }

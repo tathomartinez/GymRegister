@@ -1,5 +1,6 @@
 package com.tatho.presentation
 
+import com.tatho.menu_data.model.MenuItem
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -101,16 +101,8 @@ fun ItemMenuSubtitle(subtitle: String) {
 }
 
 
-@Preview
 @Composable
-fun DefaultPreview() {
-    MenuScreen {
-
-    }
-}
-
-@Composable
-fun MenuScreen(navNext: () -> Unit) {
+fun MenuScreen(navNext: () -> Unit, itemMenuList: List<MenuItem>) {
     ConstraintLayout(
         modifier =
         Modifier
@@ -118,13 +110,8 @@ fun MenuScreen(navNext: () -> Unit) {
             .fillMaxSize()
     ) {
 
-        val itemMenuList: List<MenuItems> = listOf(
-            MenuItems("prueba", "pruebita"),
-            MenuItems("prueba", "pruebita"),
-            MenuItems("Buscador", "asd")
-        )
-
         LazyColumn {
+
             items(itemMenuList) { menuItem ->
                 ItemMenu(menuItem.title, menuItem.subtitle)
             }

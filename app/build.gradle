@@ -55,6 +55,8 @@ dependencies {
     implementation project(path: ':app:RegisterSize:domain')
     implementation project(path: ':app:RegisterSize:data')
     implementation project(path: ':app:RegisterSize:presentation')
+    implementation project(path: ':app:Menu:presentation')
+    implementation project(path: ':app:Menu:menu_data')
     implementation project(path: ':app:Common')
 
     implementation 'androidx.core:core-ktx:1.10.1'

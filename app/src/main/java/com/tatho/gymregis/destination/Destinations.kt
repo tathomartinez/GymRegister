@@ -1,14 +1,11 @@
 package com.tatho.gymregis.destination
 
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.tatho.gymregis.presentations.components.SingUpScreen
-import com.tatho.menu_data.mapper.toDto
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.tatho.presentation.BodyMeasurementScreen
 import com.tatho.presentation.MenuScreen
 import com.tatho.presentation.MenuViewModel
@@ -36,7 +33,7 @@ fun NavigationHost() {
             val viewModel: MenuViewModel = hiltViewModel<MenuViewModel>()
 
             MenuScreen(
-                { Destinations.BodyMeasurement.route}, viewModel = viewModel ,
+                { Destinations.BodyMeasurement.route }, viewModel = viewModel,
             )
 
         }

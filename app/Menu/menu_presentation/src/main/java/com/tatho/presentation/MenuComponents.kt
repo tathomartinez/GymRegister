@@ -1,18 +1,15 @@
 package com.tatho.presentation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FitnessCenter
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,15 +20,17 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.tatho.common.theme.BackGroundLightColor
 
 @Composable
-fun ItemMenu(title: String, subtitle: String) {
+fun ItemMenu(title: String, subtitle: String, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .padding(8.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable { onClick() },
         elevation = 4.dp,
         shape = RoundedCornerShape(8.dp),
-        backgroundColor = Color.White
-    ) {
+        backgroundColor = Color.White,
+
+        ) {
         ItemMenuContent(title, subtitle)
     }
 }
@@ -110,18 +109,46 @@ fun MenuScreen(navNext: () -> Unit, viewModel: MenuViewModel) {
             .fillMaxSize()
     ) {
         val menuItemsState by viewModel.menuItems.collectAsState()
+        val coroutineScope = rememberCoroutineScope()
+        val scaffoldState: ScaffoldState = rememberScaffoldState()
 
+        val (screen, btnRegister) = createRefs()
+
+        val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
+        if (snackbarVisibleState) {
+            Snackbar(
+
+                action = {
+                    Button(onClick = {}) {
+                        Text("MyAction")
+                    }
+                },
+                modifier = Modifier.padding(8.dp)
+            ) { Text(text = "This is a snackbar!") }
+        }
         menuItemsState.data?.let { data ->
             LazyColumn {
                 items(data) { menuItem ->
-                    ItemMenu(menuItem.title, menuItem.subtitle)
+                    ItemMenu(menuItem.title, menuItem.subtitle, onClick = {
+                        setSnackBarState(!snackbarVisibleState)
+                    })
                 }
             }
         }
-//        LazyColumn {
-//            items(itemMenuList) { menuItem ->
-//                ItemMenu(menuItem.title, menuItem.subtitle)
-//            }
-//        }
+
+        if (snackbarVisibleState) {
+            Snackbar(
+                action = {
+                    Button(onClick = {}) {
+                        Text("MyAction")
+                    }
+                },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .constrainAs(btnRegister) {
+                        end.linkTo(parent.end)
+                    }
+            ) { Text(text = "This is a snackbar!") }
+        }
     }
 }

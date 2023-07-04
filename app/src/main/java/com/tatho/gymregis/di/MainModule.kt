@@ -2,8 +2,8 @@ package com.tatho.gymregis.di
 
 import android.content.Context
 import com.tatho.data.room.BodyMeasurementDao
-import com.tatho.menu_data.room.MenuItemDao
 import com.tatho.gymregis.room.AppDatabase
+import com.tatho.menu_data.room.MenuItemDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

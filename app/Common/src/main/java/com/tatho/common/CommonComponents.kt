@@ -269,6 +269,7 @@ fun ButtonComponent(
 
     }
 }
+
 @Composable
 fun NormalTextComponent(value: String) {
     Text(

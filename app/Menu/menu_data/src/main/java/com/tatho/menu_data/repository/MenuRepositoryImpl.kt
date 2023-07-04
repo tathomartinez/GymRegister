@@ -1,12 +1,12 @@
 package com.tatho.menu_data.repository
 
 import com.tatho.menu_data.room.MenuItemDao
-import com.tatho.menu_domain.repository.IMenuRepository
 import com.tatho.menu_domain.entities.MenuItem
+import com.tatho.menu_domain.repository.IMenuRepository
 
 class MenuRepositoryImpl(
     private val menuItemDao: MenuItemDao
-): IMenuRepository {
+) : IMenuRepository {
     override suspend fun getListMenuItemsByRol(role: String): List<MenuItem> {
 //        val cursor = menuItemDao.getListMenuItemsByRol(role)
 //        val menuItems = mutableListOf<MenuItem>()

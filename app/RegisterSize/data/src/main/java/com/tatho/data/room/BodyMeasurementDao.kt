@@ -9,5 +9,5 @@ import com.tatho.domain.entites.BodyMeasurement
 interface BodyMeasurementDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(bodyMeasurement: BodyMeasurement):Long
+    suspend fun insert(bodyMeasurement: BodyMeasurement): Long
 }

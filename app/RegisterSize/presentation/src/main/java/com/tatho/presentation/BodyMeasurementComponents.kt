@@ -7,16 +7,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.navigation.compose.rememberNavController
 import com.tatho.common.ButtonComponent
 import com.tatho.common.GymTextFieldComponent
 import com.tatho.common.HeaderTextComponent
 import com.tatho.common.NormalTextComponent
 import com.tatho.common.theme.BackGroundColor
-import com.tatho.presentation.constans.UiConstants
 import com.tatho.presentation.constans.UiConstants.BACK
 import com.tatho.presentation.constans.UiConstants.BICEP
 import com.tatho.presentation.constans.UiConstants.CHEST
@@ -48,7 +45,7 @@ fun BodyMeasurementScreen(navNext: () -> Unit) {
 
         val (screen, btnRegister) = createRefs()
 
-        ConstraintLayout (
+        ConstraintLayout(
             Modifier
                 .fillMaxWidth()
                 .constrainAs(screen) {
@@ -56,16 +53,36 @@ fun BodyMeasurementScreen(navNext: () -> Unit) {
                     start.linkTo(parent.start, margin = 28.dp)
                     end.linkTo(parent.end, margin = 28.dp)
                     bottom.linkTo(parent.bottom)
-                }){
+                }) {
 
             Column() {
                 NormalTextComponent(value = "dd/mm/yyyy")
                 HeaderTextComponent(value = REGISTRAMEDIDAS)
-                GymTextFieldComponent(label = CHEST, icon = Icons.Default.FitnessCenter, contentDescription = CHEST)
-                GymTextFieldComponent(label = WAIST, icon = Icons.Default.FitnessCenter, contentDescription = WAIST)
-                GymTextFieldComponent(label = BICEP, icon = Icons.Default.FitnessCenter, contentDescription = BICEP)
-                GymTextFieldComponent(label = GLUTEUS, icon = Icons.Default.FitnessCenter, contentDescription = GLUTEUS)
-                GymTextFieldComponent(label = BACK, icon = Icons.Default.FitnessCenter, contentDescription = BACK)
+                GymTextFieldComponent(
+                    label = CHEST,
+                    icon = Icons.Default.FitnessCenter,
+                    contentDescription = CHEST
+                )
+                GymTextFieldComponent(
+                    label = WAIST,
+                    icon = Icons.Default.FitnessCenter,
+                    contentDescription = WAIST
+                )
+                GymTextFieldComponent(
+                    label = BICEP,
+                    icon = Icons.Default.FitnessCenter,
+                    contentDescription = BICEP
+                )
+                GymTextFieldComponent(
+                    label = GLUTEUS,
+                    icon = Icons.Default.FitnessCenter,
+                    contentDescription = GLUTEUS
+                )
+                GymTextFieldComponent(
+                    label = BACK,
+                    icon = Icons.Default.FitnessCenter,
+                    contentDescription = BACK
+                )
             }
         }
 

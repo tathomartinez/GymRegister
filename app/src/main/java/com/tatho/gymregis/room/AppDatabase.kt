@@ -5,8 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.tatho.data.room.BodyMeasurementDao
-import com.tatho.menu_data.room.MenuItemDao
 import com.tatho.domain.entites.BodyMeasurement
+import com.tatho.menu_data.room.MenuItemDao
 import com.tatho.menu_domain.entities.MenuItem
 
 @Database(entities = [BodyMeasurement::class, MenuItem::class], version = 2, exportSchema = true)

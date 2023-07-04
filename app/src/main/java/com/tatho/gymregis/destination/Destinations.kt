@@ -26,10 +26,13 @@ fun NavigationHost() {
         startDestination = Destinations.Login.route
     ) {
         composable(Destinations.Login.route) {
-            SingUpScreen { navController.navigate(Destinations.BodyMeasurement.route) }
+            SingUpScreen { navController.navigate(Destinations.Main.route) }
         }
         composable(Destinations.Main.route) {
-            MenuScreen({}, emptyList<MenuItem>())
+            MenuScreen(
+                { Destinations.BodyMeasurement.route },
+                listOf(MenuItem("Home", "Home"), MenuItem("Body Measurement", "Body Measurement"))
+            )
         }
         composable(Destinations.BodyMeasurement.route) {
             BodyMeasurementScreen { navController.navigate(Destinations.Main.route) }

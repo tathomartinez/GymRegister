@@ -1,6 +1,6 @@
 package com.tatho.presentation
 
-import com.tatho.menu_data.model.MenuItem
+import com.tatho.menu_data.model.MenuItemDto
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tatho.common.theme.BackGroundLightColor
 
 
@@ -102,7 +103,7 @@ fun ItemMenuSubtitle(subtitle: String) {
 
 
 @Composable
-fun MenuScreen(navNext: () -> Unit, itemMenuList: List<MenuItem>) {
+fun MenuScreen(navNext: () -> Unit, itemMenuList: List<MenuItemDto>) {
     ConstraintLayout(
         modifier =
         Modifier
@@ -111,7 +112,6 @@ fun MenuScreen(navNext: () -> Unit, itemMenuList: List<MenuItem>) {
     ) {
 
         LazyColumn {
-
             items(itemMenuList) { menuItem ->
                 ItemMenu(menuItem.title, menuItem.subtitle)
             }

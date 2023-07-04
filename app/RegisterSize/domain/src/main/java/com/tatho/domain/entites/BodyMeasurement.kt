@@ -1,4 +1,4 @@
-package com.tatho.domain.model
+package com.tatho.domain.entites
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

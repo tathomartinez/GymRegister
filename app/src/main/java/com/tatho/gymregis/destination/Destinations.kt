@@ -54,6 +54,7 @@ fun resolveNavigation(it: String, navController: NavHostController, context: Con
         Destinations.Wifi.route -> context.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
         Destinations.Login.route -> navController.navigate(Destinations.Main.route)
         Destinations.Main.route -> navController.navigate(Destinations.Main.route)
+        Destinations.BodyMeasurement.route -> navController.navigate(Destinations.BodyMeasurement.route)
     }
 }
 

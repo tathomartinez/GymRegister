@@ -16,6 +16,5 @@ object MenuDataModule {
     @Provides
     fun provideMenuRepository(menuItemDao: MenuItemDao): IMenuRepository {
         return MenuRepositoryImpl(menuItemDao)
-
     }
 }

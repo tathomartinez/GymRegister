@@ -1,6 +1,7 @@
 package com.tatho.presentation
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,12 +11,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIos
-import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -26,10 +27,11 @@ import androidx.compose.ui.unit.sp
 import com.tatho.common.theme.BackGroundLightColor
 import com.tatho.common.theme.PrimaryColor
 import com.tatho.common.theme.fontApp
+import com.tatho.menu_presentation.R
 import com.tatho.presentation.exception.MenuParentException
 
 @Composable
-fun ItemMenu(title: String, subtitle: String, onClick: () -> Unit) {
+fun ItemMenu(title: String, subtitle: String, directionIcon: String, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -40,12 +42,12 @@ fun ItemMenu(title: String, subtitle: String, onClick: () -> Unit) {
         backgroundColor = Color.White,
 
         ) {
-        ItemMenuContent(title, subtitle)
+        ItemMenuContent(title, subtitle, directionIcon)
     }
 }
 
 @Composable
-fun ItemMenuContent(title: String, subtitle: String) {
+fun ItemMenuContent(title: String, subtitle: String, directionIcon: String) {
     Row(
         Modifier
             .offset(x = 8.dp, y = 8.dp)
@@ -54,21 +56,31 @@ fun ItemMenuContent(title: String, subtitle: String) {
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        ItemMenuIcon()
+        ItemMenuIcon(directionIcon)
         ItemMenuText(title, subtitle)
     }
 }
 
 @Composable
-fun ItemMenuIcon() {
-    Icon(
-        imageVector = Icons.Default.FitnessCenter,
-        contentDescription = "Icono prueba",
+fun ItemMenuIcon(directionIcon: String ) {
+    Image(
         modifier = Modifier
-            .padding(0.dp)
-            .width(20.dp)
-            .height(20.dp)
+            .background(color = Color(0xFF00C4B4), shape = RoundedCornerShape(size = 4.dp)),
+        painter = painterResource(id = getResId("ic_${directionIcon}", R.drawable::class.java)),
+        contentDescription = "Icono menu",
     )
+}
+
+private fun getResId(
+    resourceName: String,
+    cls: Class<*>,
+): Int {
+    return try {
+        val field = cls.getDeclaredField(resourceName)
+        field.getInt(null)
+    } catch (e: Exception) {
+        0
+    }
 }
 
 @Composable
@@ -111,7 +123,7 @@ fun ItemMenuSubtitle(subtitle: String) {
 @Preview
 @Composable
 fun MenuScreenPreview2() {
-    TextTitleMenu( {})
+    TextTitleMenu({})
 }
 
 @Composable
@@ -134,7 +146,9 @@ fun TextTitleMenu(back: () -> Unit) {
                 .height(48.dp)
                 .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 16.dp)
         ) {
-            Icon(imageVector = Icons.Default.ArrowBackIos, contentDescription = "icon back", tint = PrimaryColor,
+            Icon(imageVector = Icons.Default.ArrowBackIos,
+                contentDescription = "icon back",
+                tint = PrimaryColor,
                 modifier = Modifier.clickable { back() })
         }
         Text(
@@ -175,13 +189,12 @@ fun MenuScreen(navegateTo: (String) -> Unit, viewModel: MenuViewModel) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.
-                background(BackGroundLightColor)
+        modifier = Modifier.background(BackGroundLightColor)
     ) {
         val menuItemsState by viewModel.menuItems.collectAsState()
 
 
-        val (snackbarVisibleState ) = remember { mutableStateOf(false) }
+        val (snackbarVisibleState) = remember { mutableStateOf(false) }
         if (snackbarVisibleState) {
             Snackbar(
 
@@ -203,15 +216,19 @@ fun MenuScreen(navegateTo: (String) -> Unit, viewModel: MenuViewModel) {
         menuItemsState.data?.let { data ->
             LazyColumn {
                 items(data) { menuItem ->
-                    ItemMenu(menuItem.title, menuItem.subtitle ?: "", onClick = {
-                        Log.e("subtitulo", menuItem.subtitle.toString())
-                        if (menuItem.subtitle.isNullOrEmpty()) {
-                            navegateTo(menuItem.route!!)
-                            return@ItemMenu
-                        }
-                        viewModel.getChildrenByParentId(menuItem.id)
-                        Log.e("subtitulo", menuItem.subtitle.toString())
-                    })
+                    ItemMenu(
+                        menuItem.title,
+                        menuItem.subtitle ?: "",
+                        menuItem.iconRoute ?: "arrows",
+                        onClick = {
+                            Log.e("subtitulo", menuItem.subtitle.toString())
+                            if (menuItem.subtitle.isNullOrEmpty()) {
+                                navegateTo(menuItem.route!!)
+                                return@ItemMenu
+                            }
+                            viewModel.getChildrenByParentId(menuItem.id)
+                            Log.e("subtitulo", menuItem.subtitle.toString())
+                        })
                 }
             }
         }

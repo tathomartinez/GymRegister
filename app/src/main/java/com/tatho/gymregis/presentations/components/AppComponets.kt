@@ -14,19 +14,6 @@ import com.tatho.common.*
 import com.tatho.common.theme.BackGroundColor
 import com.tatho.gymregis.R
 
-
-//@Preview
-//@Composable
-//fun DefaultPreview() {
-//    val navController = rememberNavController()
-//    SingUpScreen {
-//        _navController()
-//    }
-//}
-
-fun _navController() {
-}
-
 @Composable
 fun SingUpScreen(navNext: () -> Unit) {
 

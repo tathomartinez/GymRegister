@@ -12,7 +12,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-//            val viewModel: MenuViewModel = viewModel()
             NavigationHost()
         }
     }

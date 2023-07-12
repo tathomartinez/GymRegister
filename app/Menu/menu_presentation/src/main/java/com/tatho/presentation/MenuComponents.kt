@@ -1,5 +1,6 @@
 package com.tatho.presentation
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -99,9 +100,15 @@ fun ItemMenuSubtitle(subtitle: String) {
     )
 }
 
+//@Preview
+//@Composable
+//fun MenuScreenPreview() {
+//        MenuScreen(navNext = {}, viewModel = menuViewModel)
+//}
+
 
 @Composable
-fun MenuScreen(navNext: () -> Unit, viewModel: MenuViewModel) {
+fun MenuScreen(navNext: (String) -> Unit, viewModel: MenuViewModel) {
     ConstraintLayout(
         modifier =
         Modifier
@@ -109,8 +116,6 @@ fun MenuScreen(navNext: () -> Unit, viewModel: MenuViewModel) {
             .fillMaxSize()
     ) {
         val menuItemsState by viewModel.menuItems.collectAsState()
-        val coroutineScope = rememberCoroutineScope()
-        val scaffoldState: ScaffoldState = rememberScaffoldState()
 
         val (screen, btnRegister) = createRefs()
 
@@ -129,8 +134,14 @@ fun MenuScreen(navNext: () -> Unit, viewModel: MenuViewModel) {
         menuItemsState.data?.let { data ->
             LazyColumn {
                 items(data) { menuItem ->
-                    ItemMenu(menuItem.title, menuItem.subtitle, onClick = {
-                        setSnackBarState(!snackbarVisibleState)
+                    ItemMenu(menuItem.title, menuItem.subtitle ?: "", onClick = {
+                        Log.e("subtitulo", menuItem.subtitle.toString())
+                        if (menuItem.subtitle.isNullOrEmpty()) {
+                            navNext(menuItem.route!!)
+                            return@ItemMenu
+                        }
+                        viewModel.getChildrenByParentId(menuItem.id)
+                        Log.e("subtitulo", menuItem.subtitle.toString())
                     })
                 }
             }

@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tatho.domain.model.BodyMeasurements
 import com.tatho.domain.usercase.SaveBodyMeasurementSizeUseCase
+import com.tatho.domain.usercase.UpdateRegisterTodayUserCase
+import com.tatho.domain.usercase.ValidateRegisterTodayUserCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -15,6 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class BodyMeasurementViewModel @Inject constructor(
     private val saveBodyMeasurementSizeUserCase: SaveBodyMeasurementSizeUseCase,
+    private val validateRegisterTodayUserCase: ValidateRegisterTodayUserCase,
+    private val updateRegisterTodayUserCase: UpdateRegisterTodayUserCase
 ) : ViewModel() {
     val chestValue = mutableStateOf(0)
     val waistValue = mutableStateOf(0)
@@ -25,23 +29,33 @@ class BodyMeasurementViewModel @Inject constructor(
     val showSuccess = mutableStateOf(false)
 
     fun save() {
-        // Aquí puedes acceder a los valores de los campos y realizar las acciones necesarias
-        viewModelScope.launch {
-            val chest = chestValue.value
-            val waist = waistValue.value
-            val bicep = bicepValue.value
-            val gluteus = gluteusValue.value
-            val back = backValue.value
+        val chest = chestValue.value
+        val waist = waistValue.value
+        val bicep = bicepValue.value
+        val gluteus = gluteusValue.value
+        val back = backValue.value
 
-            val bodyMeasurements = BodyMeasurements(chest, waist, bicep, gluteus, back)
-            Log.e("SAVE", "antes de llamar al caso")
-            saveBodyMeasurementSizeUserCase.invoke(bodyMeasurement = bodyMeasurements) { success ->
-                showSuccess.value = true
+        val bodyMeasurements =
+            BodyMeasurements(chest, waist, bicep, gluteus, back, date = getCurrentDate())
+        validateRegisterTodayUserCase.invoke() { isRegistToday ->
+
+            if (!isRegistToday) {
+                viewModelScope.launch {
+                    saveBodyMeasurementSizeUserCase.invoke(bodyMeasurement = bodyMeasurements) { success ->
+                        showSuccess.value = true
+                        updateRegisterTodayUserCase.invoke()
+                        viewModelScope.launch {
+                            delay(5000)
+                            showSuccess.value = false
+                        }
+                    }
+                }
+            } else {
+                showError.value = true
                 viewModelScope.launch {
                     delay(5000)
-                    showSuccess.value = false
+                    showError.value = false
                 }
-                Log.e("SAVE", "save ok")
             }
         }
     }

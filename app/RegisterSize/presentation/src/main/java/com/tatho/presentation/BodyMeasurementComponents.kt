@@ -73,8 +73,14 @@ fun BodyMeasurementScreen(navegateTo: () -> Unit, viewModel: BodyMeasurementView
             ) {
 
                 if (viewModel.showSuccess.value) {
-                    AlertDialogCustom()
-                } else {
+                    AlertDialogCustom("Insertion successful")
+                }
+
+                if (viewModel.showError.value) {
+                    AlertDialogCustom("Medidas ya registradas el dia de hoy vuelve pronto")
+                }
+
+                if (!(viewModel.showSuccess.value || viewModel.showError.value)) {
                     NormalTextComponent(value = currentDate)
                     HeaderTextComponent(value = REGISTRAMEDIDAS)
                     Column() {
@@ -136,26 +142,26 @@ fun BodyMeasurementScreen(navegateTo: () -> Unit, viewModel: BodyMeasurementView
                 }
             }
         }
-
-        ButtonComponent(
-            value = SAVE,
-            onButtonClicked = {
-                viewModel.save()
-            },
-            isEnabled = true,
-            modifier = Modifier
-                .constrainAs(btnRegister) {
-//                    top.linkTo(screen.bottom)
-                    start.linkTo(screen.start)
-                    end.linkTo(screen.end)
-                    bottom.linkTo(parent.bottom, margin = 24.dp)
-                }
-        )
+        if (!(viewModel.showSuccess.value || viewModel.showError.value)) {
+            ButtonComponent(
+                value = SAVE,
+                onButtonClicked = {
+                    viewModel.save()
+                },
+                isEnabled = true,
+                modifier = Modifier
+                    .constrainAs(btnRegister) {
+                        start.linkTo(screen.start)
+                        end.linkTo(screen.end)
+                        bottom.linkTo(parent.bottom, margin = 24.dp)
+                    }
+            )
+        }
     }
 }
 
 @Composable
-fun AlertDialogCustom() {
+fun AlertDialogCustom(text: String) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -174,7 +180,7 @@ fun AlertDialogCustom() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Insertion successful",
+                    text = text,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(8.dp),
                     fontFamily = FontFamily(Font(fontApp)),

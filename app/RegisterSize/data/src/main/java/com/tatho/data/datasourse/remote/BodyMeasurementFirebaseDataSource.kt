@@ -1,9 +1,9 @@
 package com.tatho.data.datasourse.remote
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.tatho.common.Resource
 import com.tatho.domain.model.BodyMeasurements
 import kotlinx.coroutines.tasks.await
-import com.tatho.common.Resource
 
 class BodyMeasurementFirebaseDataSource(firestore: FirebaseFirestore) {
     

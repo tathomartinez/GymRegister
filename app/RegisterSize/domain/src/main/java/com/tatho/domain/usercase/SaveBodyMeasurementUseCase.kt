@@ -8,7 +8,7 @@ class SaveBodyMeasurementSizeUseCase(
     private val repository: BodyMeasurementRepository
 ) {
     //Todo agregar callback de error
-    suspend operator fun invoke(bodyMeasurement: BodyMeasurements, callback: (String) -> Unit) {
+    suspend operator fun invoke(bodyMeasurement: BodyMeasurements, callback: (Boolean) -> Unit) {
         try {
             repository.saveBodyMeasurement(bodyMeasurement, callback)
             Log.e("SAVE", "Fue invocado el caso de uso")

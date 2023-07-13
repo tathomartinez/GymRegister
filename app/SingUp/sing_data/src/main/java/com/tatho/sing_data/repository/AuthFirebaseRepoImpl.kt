@@ -8,13 +8,15 @@ import com.tatho.sing_domain.repository.IAuthFirebaseRepository
 class AuthFirebaseRepoImpl(
     private var auth: FirebaseAuth
 ) : IAuthFirebaseRepository {
-    override suspend fun register(email: String, password: String, callback: (Boolean) -> Unit) {
+    override suspend fun register(email: String, password: String, callback: (String) -> Unit) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                callback(true)
+                it.user?.uid?.let { uid ->
+                    callback(uid)
+                }
                 Log.e("AUT", "Se creo el usuario")
             }.addOnFailureListener {
-                callback(false)
+                callback("No se creo el usuario")
                 Log.e("AUT", "No se creo el usuario")
             }
     }

@@ -229,20 +229,5 @@ fun MenuScreen(navegateTo: (String) -> Unit, viewModel: MenuViewModel) {
                 }
             }
         }
-
-//        if (snackbarVisibleState) {
-//            Snackbar(
-//                action = {
-//                    Button(onClick = {}) {
-//                        Text("MyAction")
-//                    }
-//                },
-//                modifier = Modifier
-//                    .padding(8.dp)
-//                    .constrainAs(btnRegister) {
-//                        end.linkTo(parent.end)
-//                    }
-//            ) { Text(text = "This is a snackbar!") }
-//        }
     }
 }

@@ -20,10 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.tatho.common.ButtonComponent
-import com.tatho.common.HeaderTextComponent
-import com.tatho.common.NormalTextComponent
-import com.tatho.common.SizeTextFieldComponent
+import com.tatho.common.*
 import com.tatho.common.theme.BackGroundColor
 import com.tatho.common.theme.fontApp
 import com.tatho.presentation.constans.UiConstants.BACK
@@ -160,33 +157,3 @@ fun BodyMeasurementScreen(navegateTo: () -> Unit, viewModel: BodyMeasurementView
     }
 }
 
-@Composable
-fun AlertDialogCustom(text: String) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Card(
-            modifier = Modifier
-                .width(300.dp)
-                .height(200.dp)
-                .padding(16.dp)
-                .clip(RoundedCornerShape(8.dp)),
-            backgroundColor = Color.White,
-            elevation = 4.dp
-        ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = text,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(8.dp),
-                    fontFamily = FontFamily(Font(fontApp)),
-                    fontSize = 18.sp
-                )
-            }
-        }
-    }
-}

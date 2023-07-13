@@ -3,6 +3,7 @@ package com.tatho.common
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -25,6 +27,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -344,4 +348,35 @@ fun SizeTextFieldComponent(
         },
         textStyle = TextStyle(fontSize = 20.sp)
     )
+}
+
+@Composable
+fun AlertDialogCustom(text: String) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Card(
+            modifier = Modifier
+                .width(300.dp)
+                .height(200.dp)
+                .padding(16.dp)
+                .clip(RoundedCornerShape(8.dp)),
+            backgroundColor = Color.White,
+            elevation = 4.dp
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = text,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(8.dp),
+                    fontFamily = FontFamily(Font(fontApp)),
+                    fontSize = 18.sp
+                )
+            }
+        }
+    }
 }

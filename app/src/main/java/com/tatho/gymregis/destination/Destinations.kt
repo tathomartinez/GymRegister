@@ -35,11 +35,14 @@ fun NavigationHost() {
         startDestination = Destinations.Login.route
     ) {
         composable(Destinations.Login.route) {
-            val viewModel: SignUpViewModel = hiltViewModel<SignUpViewModel>()
-            SingUpScreen({ navController.navigate(Destinations.Main.route) }, viewModel = viewModel)
+            val viewModel: SignUpViewModel = hiltViewModel()
+            SingUpScreen(
+                { navController.navigate(Destinations.Main.route) },
+                viewModel = viewModel
+            )
         }
         composable(Destinations.Main.route) {
-            val viewModel: MenuViewModel = hiltViewModel<MenuViewModel>()
+            val viewModel: MenuViewModel = hiltViewModel()
             val context = LocalContext.current
             MenuScreen(
                 { route ->
@@ -49,7 +52,7 @@ fun NavigationHost() {
             )
         }
         composable(Destinations.BodyMeasurement.route) {
-            val viewModel: BodyMeasurementViewModel = hiltViewModel<BodyMeasurementViewModel>()
+            val viewModel: BodyMeasurementViewModel = hiltViewModel()
             BodyMeasurementScreen(
                 { }, viewModel = viewModel,
             )

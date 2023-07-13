@@ -54,8 +54,13 @@ fun HeaderTextComponent(value: String) {
 }
 
 @Composable
-fun GymEmailFieldComponent(label: String, icon: ImageVector, contentDescription: String) {
-    val textValue = remember { mutableStateOf("") }
+fun GymEmailFieldComponent(
+    label: String,
+    icon: ImageVector,
+    contentDescription: String,
+    value: String,
+    onValueChange: (String) -> Unit
+) {
     OutlinedTextField(
         label = { Text(text = label, color = PrimaryColor) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -68,10 +73,8 @@ fun GymEmailFieldComponent(label: String, icon: ImageVector, contentDescription:
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email
         ),
-        value = textValue.value,
-        onValueChange = {
-            textValue.value = it
-        },
+        value = value,
+        onValueChange = onValueChange,
         modifier = Modifier
             .background(BackGroundColor)
             .fillMaxWidth(),
@@ -81,7 +84,7 @@ fun GymEmailFieldComponent(label: String, icon: ImageVector, contentDescription:
                 tint = TextColor,
                 contentDescription = contentDescription
             )
-        },
+        }
     )
 }
 
@@ -114,10 +117,12 @@ fun GymTextFieldComponent(label: String, icon: ImageVector, contentDescription: 
         },
     )
 }
-
 @Composable
-fun GymPasswordTextFieldComponent(label: String) {
-    val password = remember { mutableStateOf("") }
+fun GymPasswordTextFieldComponent(
+    label: String,
+    value: String,
+    onValueChange: (String) -> Unit
+) {
     val passwordVisible = remember { mutableStateOf(false) }
     OutlinedTextField(
         label = { Text(text = label, color = PrimaryColor) },
@@ -131,10 +136,8 @@ fun GymPasswordTextFieldComponent(label: String) {
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password
         ),
-        value = password.value,
-        onValueChange = {
-            password.value = it
-        },
+        value = value,
+        onValueChange = onValueChange,
         modifier = Modifier
             .background(BackGroundColor)
             .fillMaxWidth(),
@@ -159,9 +162,7 @@ fun GymPasswordTextFieldComponent(label: String) {
                     contentDescription = description
                 )
             }
-
         },
-
         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
     )
 }

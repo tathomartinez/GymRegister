@@ -12,7 +12,6 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 object FirebaseModule {
 
-
     @Provides
     fun provideBodyMeasurementRepository(dataSource: FirebaseFirestore): BodyMeasurementRepository {
         return BodyMeasurementRepoImpl(dataSource)

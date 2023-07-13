@@ -10,11 +10,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.tatho.gymregis.presentations.components.SingUpScreen
 import com.tatho.presentation.BodyMeasurementScreen
 import com.tatho.presentation.BodyMeasurementViewModel
 import com.tatho.presentation.MenuScreen
 import com.tatho.presentation.MenuViewModel
+import com.tatho.sing_presentation.SignUpViewModel
+import com.tatho.sing_presentation.SingUpScreen
 
 sealed class Destinations(
     val route: String
@@ -34,7 +35,8 @@ fun NavigationHost() {
         startDestination = Destinations.Login.route
     ) {
         composable(Destinations.Login.route) {
-            SingUpScreen { navController.navigate(Destinations.Main.route) }
+            val viewModel: SignUpViewModel = hiltViewModel<SignUpViewModel>()
+            SingUpScreen({ navController.navigate(Destinations.Main.route) }, viewModel = viewModel)
         }
         composable(Destinations.Main.route) {
             val viewModel: MenuViewModel = hiltViewModel<MenuViewModel>()

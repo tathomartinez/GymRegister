@@ -1,7 +1,6 @@
 package com.tatho.domain.usercase
 
 import android.content.SharedPreferences
-import android.util.Log
 import javax.inject.Inject
 
 class ValidateRegisterTodayUserCase @Inject constructor(

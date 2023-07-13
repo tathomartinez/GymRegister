@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -15,15 +16,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -32,7 +36,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tatho.common.theme.*
-
 
 @Composable
 fun HeaderTextComponent(value: String) {
@@ -284,5 +287,60 @@ fun NormalTextComponent(value: String) {
         ),
         color = TextColor,
         textAlign = TextAlign.Center
+    )
+}
+
+@Composable
+fun SizeTextFieldComponent(
+    label: String, icon: ImageVector, contentDescription: String,
+    focusRequester: FocusRequester,
+    nextFocusRequester: FocusRequester? = null,
+    value: String,
+    onValueChange: (String) -> Unit
+) {
+    val currentFocus = LocalFocusManager.current
+    OutlinedTextField(
+        label = { Text(text = label, color = PrimaryColor) },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = PrimaryColor,
+            focusedLabelColor = PrimaryColor,
+            cursorColor = PrimaryColor,
+            backgroundColor = BackGroundLightColor,
+            textColor = PrimaryColor
+        ),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Number,
+            imeAction = if (nextFocusRequester != null) ImeAction.Next else ImeAction.Done
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                if (nextFocusRequester != null) {
+                    nextFocusRequester.requestFocus()
+                } else {
+                    currentFocus.clearFocus()
+                }
+            }
+        ),
+        value = value,
+        onValueChange = onValueChange,
+        modifier = Modifier
+            .background(BackGroundColor)
+            .fillMaxWidth(),
+        leadingIcon = {
+            Icon(
+                icon,
+                tint = TextColor,
+                contentDescription = contentDescription
+            )
+        },
+        trailingIcon = {
+            Text(
+                text = "cm",
+                color = PrimaryColor,
+                fontSize = 20.sp,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+        },
+        textStyle = TextStyle(fontSize = 20.sp)
     )
 }

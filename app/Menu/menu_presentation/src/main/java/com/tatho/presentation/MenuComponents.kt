@@ -221,13 +221,11 @@ fun MenuScreen(navegateTo: (String) -> Unit, viewModel: MenuViewModel) {
                         menuItem.subtitle ?: "",
                         menuItem.iconRoute ?: "arrows",
                         onClick = {
-                            Log.e("subtitulo", menuItem.subtitle.toString())
                             if (menuItem.subtitle.isNullOrEmpty()) {
                                 navegateTo(menuItem.route!!)
                                 return@ItemMenu
                             }
                             viewModel.getChildrenByParentId(menuItem.id)
-                            Log.e("subtitulo", menuItem.subtitle.toString())
                         })
                 }
             }

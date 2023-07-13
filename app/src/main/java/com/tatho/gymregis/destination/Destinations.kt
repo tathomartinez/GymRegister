@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.tatho.gymregis.presentations.components.SingUpScreen
 import com.tatho.presentation.BodyMeasurementScreen
+import com.tatho.presentation.BodyMeasurementViewModel
 import com.tatho.presentation.MenuScreen
 import com.tatho.presentation.MenuViewModel
 
@@ -40,11 +41,16 @@ fun NavigationHost() {
             val context = LocalContext.current
             MenuScreen(
                 { route ->
-                    resolveNavigation(route, navController, context) }, viewModel = viewModel,
+                    resolveNavigation(route, navController, context)
+                },
+                viewModel = viewModel,
             )
         }
         composable(Destinations.BodyMeasurement.route) {
-            BodyMeasurementScreen { navController.navigate(Destinations.Main.route) }
+            val viewModel: BodyMeasurementViewModel = hiltViewModel<BodyMeasurementViewModel>()
+            BodyMeasurementScreen(
+                { }, viewModel = viewModel,
+            )
         }
     }
 }
@@ -57,5 +63,6 @@ fun resolveNavigation(it: String, navController: NavHostController, context: Con
         Destinations.BodyMeasurement.route -> navController.navigate(Destinations.BodyMeasurement.route)
     }
 }
+
 
 

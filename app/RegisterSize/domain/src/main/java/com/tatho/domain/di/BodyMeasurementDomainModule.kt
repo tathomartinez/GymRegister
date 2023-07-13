@@ -1,7 +1,7 @@
 package com.tatho.domain.di
 
 import com.tatho.domain.repository.BodyMeasurementRepository
-import com.tatho.domain.usercase.SaveBodyMeasurementUseCase
+import com.tatho.domain.usercase.SaveBodyMeasurementSizeUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +12,7 @@ import dagger.hilt.components.SingletonComponent
 class BodyMeasurementDomainModule {
 
     @Provides
-    fun provideSaveBodyMeasurementUseCase(repository: BodyMeasurementRepository): SaveBodyMeasurementUseCase {
-        return SaveBodyMeasurementUseCase(repository)
+    fun provideSaveBodyMeasurementSizeUseCase(repository: BodyMeasurementRepository): SaveBodyMeasurementSizeUseCase {
+        return SaveBodyMeasurementSizeUseCase(repository)
     }
 }

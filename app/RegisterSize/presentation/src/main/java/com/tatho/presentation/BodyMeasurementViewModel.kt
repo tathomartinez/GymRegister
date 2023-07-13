@@ -4,11 +4,9 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tatho.common.Resource
 import com.tatho.domain.model.BodyMeasurements
 import com.tatho.domain.usercase.SaveBodyMeasurementSizeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,7 +31,11 @@ class BodyMeasurementViewModel @Inject constructor(
 
             val bodyMeasurements = BodyMeasurements(chest, waist, bicep, gluteus, back)
             Log.e("SAVE", "antes de llamar al caso")
-            saveBodyMeasurementSizeUserCase.invoke(bodyMeasurement = bodyMeasurements)
+            saveBodyMeasurementSizeUserCase.invoke(bodyMeasurement = bodyMeasurements) { it ->
+                //TODO variable para mostrar un card en la ui dando feedback de que se salvo el item,
+                //TODO manejar cuandosea un callback de error
+                Log.e("SAVE", "save ok")
+            }
         }
     }
 }

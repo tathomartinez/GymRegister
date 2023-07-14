@@ -10,6 +10,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.tatho.login_presentation.LoginScreen
+import com.tatho.login_presentation.LoginViewModel
 import com.tatho.presentation.BodyMeasurementScreen
 import com.tatho.presentation.BodyMeasurementViewModel
 import com.tatho.presentation.MenuScreen
@@ -66,7 +68,8 @@ fun NavigationHost() {
         }
         //login
         composable(Destinations.Login.route) {
-//            LoginScreen()
+            val viewModel: LoginViewModel = hiltViewModel()
+            LoginScreen({ route -> navController.navigate(route) }, viewModel = viewModel)
         }
     }
 }
@@ -74,7 +77,7 @@ fun NavigationHost() {
 fun resolveNavigation(it: String, navController: NavHostController, context: Context) {
     when (it) {
         Destinations.Wifi.route -> context.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
-        Destinations.Login.route -> navController.navigate(Destinations.Main.route)
+        Destinations.Login.route -> navController.navigate(Destinations.Login.route)
         Destinations.Main.route -> navController.navigate(Destinations.Main.route)
         Destinations.BodyMeasurement.route -> navController.navigate(Destinations.BodyMeasurement.route)
     }

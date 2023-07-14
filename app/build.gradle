@@ -64,6 +64,11 @@ dependencies {
     implementation project(path: ':app:Logout:logout_data')
     implementation project(path: ':app:Logout:logout_presentation')
     implementation project(path: ':app:Logout:logout_domain')
+    //TODO ACA PUEDE AGREGARSE AUTOMATICAMENTE
+    implementation project(path: ':app:Login:login_data')
+    implementation project(path: ':app:Login:login_domain')
+    implementation project(path: ':app:Login:login_presentation')
+
     implementation project(path: ':app:Common')
 
     implementation 'androidx.core:core-ktx:1.10.1'

@@ -255,7 +255,6 @@ dependencies {
    implementation project(path: ':app:Menu:menu_domain')
    implementation project(path: ':app:Menu:menu_data')
    implementation project(path: ':app:$nombre_carpeta:${nombre_carpeta_lower}_domain')
-   implementation project(path: ':app:$nombre_carpeta:${nombre_carpeta_lower}_presentation')
 
    def composeBom = platform('androidx.compose:compose-bom:2023.05.01')
    implementation composeBom

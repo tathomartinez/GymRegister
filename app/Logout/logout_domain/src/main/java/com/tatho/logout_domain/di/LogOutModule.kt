@@ -1,4 +1,4 @@
-package com.tatho.logout_domain
+package com.tatho.logout_domain.di
 
 import com.tatho.logout_domain.repository.IAuthFirebaseLogoutRepository
 import com.tatho.logout_domain.usercase.LogOutUseCase

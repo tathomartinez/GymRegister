@@ -124,7 +124,7 @@ fun SingUpScreen(navNext: (String) -> Unit, viewModel: SignUpViewModel) {
             ButtonComponent(
                 value = stringResource(id = StringApp.login),
                 onButtonClicked = {
-                                  navNext("login")
+                    navNext("login")
                     // Acciones al hacer clic en el nuevo botón de logout
                 },
                 isEnabled = true,

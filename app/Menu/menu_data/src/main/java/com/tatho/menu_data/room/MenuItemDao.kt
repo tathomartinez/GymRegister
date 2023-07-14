@@ -14,7 +14,7 @@ interface MenuItemDao {
         "SELECT m1.*, GROUP_CONCAT(m2.title, ', ') AS subtitle " +
                 "FROM menu AS m1 " +
                 "LEFT JOIN menu AS m2 ON m1.id = m2.parent_menu_id " +
-                "WHERE m1.role = :role AND m1.parent_menu_id IS NULL " +
+                "WHERE m1.role = :role AND m1.parent_menu_id = 0 " +
                 "GROUP BY m1.id"
     )
     suspend fun getItemsByRoleWithoutParent(role: String): List<MenuItem>

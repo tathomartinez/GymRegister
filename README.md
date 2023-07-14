@@ -45,7 +45,15 @@ Una vez que hayas instalado la aplicación en tu dispositivo, puedes seguir esto
 
 ## Autor
 
-Tatho - Soy un desarrollador con más de 6 años de experiencia, inicialmente orientado al desarrollo backend en Java. Actualmente, me estoy enfocando en el desarrollo de aplicaciones Android.
+¡Hola! Soy Tatho, un desarrollador senior con más de 6 años de experiencia en la industria del desarrollo de software. Comencé mi trayectoria como desarrollador backend en Java y, con el tiempo, me he enfocado en el emocionante mundo del desarrollo de aplicaciones Android.
+
+A lo largo de mi carrera, he participado en numerosos proyectos desafiantes, donde he aplicado las mejores prácticas y técnicas para ofrecer soluciones de alta calidad. Mi pasión por la programación y mi constante búsqueda de aprendizaje me han permitido mantenerme actualizado con las últimas tendencias y tecnologías en el desarrollo de aplicaciones móviles.
+
+Además de mi experiencia en el desarrollo, también tengo habilidades en el diseño de interfaces de usuario y la optimización del rendimiento de las aplicaciones. Me apasiona crear experiencias de usuario excepcionales y garantizar que mis aplicaciones sean rápidas, intuitivas y atractivas.
+
+Si deseas saber más sobre mi trabajo o te gustaría colaborar en proyectos interesantes, no dudes en contactarme a través de mi perfil de [LinkedIn](https://www.linkedin.com/in/joan-sebastián-martinez-moreno/). Estoy emocionado por las oportunidades de aprendizaje y crecimiento que la industria del desarrollo de aplicaciones móviles ofrece, y espero poder contribuir con mi experiencia y habilidades en futuros desafíos.
+
+¡Gracias por visitar mi portafolio y explorar mi aplicación Gym Register App!
 
 ## Licencia
 

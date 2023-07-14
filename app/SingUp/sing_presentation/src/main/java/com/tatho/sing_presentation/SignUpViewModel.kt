@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tatho.sing_domain.usercase.IsRegisteredSessionUserCase
-import com.tatho.sing_domain.usercase.SingUpUserCase
+import com.tatho.sing_domain.usercase.SingUpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val registerUserUseCase: SingUpUserCase,
+    private val registerUserUseCase: SingUpUseCase,
     private val isRegisteredSessionUserCase: IsRegisteredSessionUserCase
 ) : ViewModel() {
     val navigateToNextScreen = mutableStateOf(false)

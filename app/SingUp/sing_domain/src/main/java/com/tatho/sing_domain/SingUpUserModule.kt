@@ -1,9 +1,9 @@
 package com.tatho.sing_domain
 
 import android.content.SharedPreferences
-import com.tatho.sing_domain.repository.IAuthFirebaseRepository
+import com.tatho.sing_domain.repository.IAuthFirebaseSingUpRepository
 import com.tatho.sing_domain.usercase.IsRegisteredSessionUserCase
-import com.tatho.sing_domain.usercase.SingUpUserCase
+import com.tatho.sing_domain.usercase.SingUpUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,8 +14,8 @@ import dagger.hilt.components.SingletonComponent
 class SingUpUserModule {
 
     @Provides
-    fun provideSingUpUserCase(repository: IAuthFirebaseRepository, sharedPreferences: SharedPreferences): SingUpUserCase {
-        return SingUpUserCase(sharedPreferences, repository)
+    fun provideSingUpUseCase(repository: IAuthFirebaseSingUpRepository): SingUpUseCase {
+        return SingUpUseCase(repository)
     }
 
     @Provides

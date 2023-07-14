@@ -1,12 +1,10 @@
 package com.tatho.sing_domain.usercase
 
-import android.content.SharedPreferences
-import com.tatho.sing_domain.repository.IAuthFirebaseRepository
+import com.tatho.sing_domain.repository.IAuthFirebaseSingUpRepository
 import javax.inject.Inject
 
-class SingUpUserCase @Inject constructor(
-    private val sharedPreferences: SharedPreferences,
-    private val repository: IAuthFirebaseRepository
+class SingUpUseCase @Inject constructor(
+    private val repository: IAuthFirebaseSingUpRepository
 ) {
 
     suspend operator fun invoke(email: String, password: String, callback: (String) -> Unit) {
@@ -17,7 +15,6 @@ class SingUpUserCase @Inject constructor(
                 return@register
             }
 
-            sharedPreferences.edit().putString("Uid", it).apply()
             callback("00")
         }
     }

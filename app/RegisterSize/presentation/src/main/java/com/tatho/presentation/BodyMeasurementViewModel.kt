@@ -1,5 +1,7 @@
 package com.tatho.presentation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,6 +31,7 @@ class BodyMeasurementViewModel @Inject constructor(
     val showError = mutableStateOf(false)
     val showSuccess = mutableStateOf(false)
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun save() {
         val chest = chestValue.value
         val waist = waistValue.value
@@ -36,7 +39,7 @@ class BodyMeasurementViewModel @Inject constructor(
         val gluteus = gluteusValue.value
         val back = backValue.value
 
-        validateRegisterTodayUserCase.invoke() { isRegistToday ->
+        validateRegisterTodayUserCase.invoke { isRegistToday ->
 
             if (!isRegistToday) {
                 viewModelScope.launch {

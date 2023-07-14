@@ -9,7 +9,8 @@ data class BodyMeasurement(
     val waist: Float,
     val bicep: Float,
     val glute: Float,
-    val back: Float
+    val back: Float,
+    val userId: String
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0

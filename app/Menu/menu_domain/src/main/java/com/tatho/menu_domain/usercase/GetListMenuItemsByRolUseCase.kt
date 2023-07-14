@@ -6,7 +6,6 @@ import com.tatho.menu_domain.repository.IMenuRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-
 class GetListMenuItemsByRolUseCase(
     private val repository: IMenuRepository
 ) {

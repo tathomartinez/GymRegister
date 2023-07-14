@@ -2,6 +2,7 @@ package com.tatho.domain.di
 
 import android.content.SharedPreferences
 import com.tatho.domain.repository.BodyMeasurementRepository
+import com.tatho.domain.usercase.GetUidFirebaseUseCase
 import com.tatho.domain.usercase.SaveBodyMeasurementSizeUseCase
 import com.tatho.domain.usercase.UpdateRegisterTodayUserCase
 import com.tatho.domain.usercase.ValidateRegisterTodayUserCase
@@ -27,5 +28,10 @@ class BodyMeasurementDomainModule {
     @Provides
     fun provideUpdateRegisterTodayUserCase(sharedPreferences: SharedPreferences): UpdateRegisterTodayUserCase {
         return UpdateRegisterTodayUserCase(sharedPreferences)
+    }
+
+    @Provides
+    fun provideGetUidFirebaseUseCase(sharedPreferences: SharedPreferences): GetUidFirebaseUseCase {
+        return GetUidFirebaseUseCase(sharedPreferences)
     }
 }

@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tatho.domain.model.BodyMeasurements
+import com.tatho.domain.usercase.GetUidFirebaseUseCase
 import com.tatho.domain.usercase.SaveBodyMeasurementSizeUseCase
 import com.tatho.domain.usercase.UpdateRegisterTodayUserCase
 import com.tatho.domain.usercase.ValidateRegisterTodayUserCase
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class BodyMeasurementViewModel @Inject constructor(
     private val saveBodyMeasurementSizeUserCase: SaveBodyMeasurementSizeUseCase,
     private val validateRegisterTodayUserCase: ValidateRegisterTodayUserCase,
-    private val updateRegisterTodayUserCase: UpdateRegisterTodayUserCase
+    private val updateRegisterTodayUserCase: UpdateRegisterTodayUserCase,
+    private val getUidFirebaseUseCase: GetUidFirebaseUseCase
 ) : ViewModel() {
     val chestValue = mutableStateOf(0)
     val waistValue = mutableStateOf(0)
@@ -34,12 +36,23 @@ class BodyMeasurementViewModel @Inject constructor(
         val gluteus = gluteusValue.value
         val back = backValue.value
 
-        val bodyMeasurements =
-            BodyMeasurements(chest, waist, bicep, gluteus, back, date = getCurrentDate())
         validateRegisterTodayUserCase.invoke() { isRegistToday ->
 
             if (!isRegistToday) {
                 viewModelScope.launch {
+                    val uid = getUidFirebaseUseCase.invoke ()
+
+                    val bodyMeasurements =
+                        BodyMeasurements(
+                            chest,
+                            waist,
+                            bicep,
+                            gluteus,
+                            back,
+                            date = getCurrentDate(),
+                            userId = uid
+                        )
+
                     saveBodyMeasurementSizeUserCase.invoke(bodyMeasurement = bodyMeasurements) { success ->
                         showSuccess.value = true
                         updateRegisterTodayUserCase.invoke()

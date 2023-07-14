@@ -21,6 +21,7 @@ sealed class Destinations(
     val route: String
 ) {
     object Login : Destinations("login")
+    object SingUpScreen : Destinations("singup")
     object BodyMeasurement : Destinations("register")
     object Main : Destinations("main")
     object Wifi : Destinations("wifi")
@@ -34,13 +35,18 @@ fun NavigationHost() {
         navController = navController,
         startDestination = Destinations.Login.route
     ) {
-        composable(Destinations.Login.route) {
+        //singup
+        composable(Destinations.SingUpScreen.route) {
             val viewModel: SignUpViewModel = hiltViewModel()
+            val context = LocalContext.current
             SingUpScreen(
-                { navController.navigate(Destinations.Main.route) },
+                { route ->
+                    resolveNavigation(route, navController, context)
+                },
                 viewModel = viewModel
             )
         }
+        //main
         composable(Destinations.Main.route) {
             val viewModel: MenuViewModel = hiltViewModel()
             val context = LocalContext.current
@@ -51,11 +57,16 @@ fun NavigationHost() {
                 viewModel = viewModel,
             )
         }
+        //register
         composable(Destinations.BodyMeasurement.route) {
             val viewModel: BodyMeasurementViewModel = hiltViewModel()
             BodyMeasurementScreen(
                 { }, viewModel = viewModel,
             )
+        }
+        //login
+        composable(Destinations.Login.route) {
+//            LoginScreen()
         }
     }
 }

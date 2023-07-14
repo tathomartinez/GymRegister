@@ -82,6 +82,7 @@ fun GymEmailFieldComponent(
         modifier = Modifier
             .background(BackGroundColor)
             .fillMaxWidth(),
+        textStyle = TextStyle(fontSize = 20.sp),
         leadingIcon = {
             Icon(
                 icon,
@@ -112,6 +113,7 @@ fun GymTextFieldComponent(label: String, icon: ImageVector, contentDescription: 
         modifier = Modifier
             .background(BackGroundColor)
             .fillMaxWidth(),
+        textStyle = TextStyle(fontSize = 20.sp),
         leadingIcon = {
             Icon(
                 icon,
@@ -145,6 +147,7 @@ fun GymPasswordTextFieldComponent(
         modifier = Modifier
             .background(BackGroundColor)
             .fillMaxWidth(),
+        textStyle = TextStyle(fontSize = 20.sp),
         leadingIcon = {
             Icon(
                 Icons.Filled.Password,

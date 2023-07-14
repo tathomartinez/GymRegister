@@ -61,6 +61,9 @@ dependencies {
     implementation project(path: ':app:SingUp:sing_data')
     implementation project(path: ':app:SingUp:sing_presentation')
     implementation project(path: ':app:SingUp:sing_domain')
+    implementation project(path: ':app:Logout:logout_data')
+    implementation project(path: ':app:Logout:logout_presentation')
+    implementation project(path: ':app:Logout:logout_domain')
     implementation project(path: ':app:Common')
 
     implementation 'androidx.core:core-ktx:1.10.1'
@@ -107,6 +110,19 @@ dependencies {
 
     implementation "androidx.activity:activity-compose:1.4.0"
     implementation 'com.google.firebase:firebase-firestore-ktx:24.6.1'
+
+    //Firebase
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.4.1'
+    implementation platform('com.google.firebase:firebase-bom:32.1.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:32.1.1"))
+
+    // Add the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-auth-ktx")
+
 }
 
 kapt {

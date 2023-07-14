@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tatho.common.Resource
+import com.tatho.logout_domain.usercase.LogOutUseCase
 import com.tatho.menu_domain.entities.MenuItem
 import com.tatho.menu_domain.usercase.GetChildrenListMenuItemsByParentIdUseCase
 import com.tatho.menu_domain.usercase.GetListMenuItemsByIdUseCase
@@ -14,13 +15,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MenuViewModel @Inject constructor(
     private val getListMenuItemsByRolUseCase: GetListMenuItemsByRolUseCase,
     private val getListMenuItemsByIdUseCase: GetListMenuItemsByIdUseCase,
-    private val getChildrenListMenuItemsByParentIdUseCase: GetChildrenListMenuItemsByParentIdUseCase
+    private val getChildrenListMenuItemsByParentIdUseCase: GetChildrenListMenuItemsByParentIdUseCase,
+    private val logOutUseCase: LogOutUseCase
 ) :
     ViewModel() {
 
@@ -102,5 +105,12 @@ class MenuViewModel @Inject constructor(
             }.launchIn(viewModelScope)
 
         } ?: throw MenuParentException("Parent is null")
+    }
+
+    fun logOut(callBack: () -> Unit) {
+        viewModelScope.launch {
+            logOutUseCase.invoke()
+            callBack()
+        }
     }
 }

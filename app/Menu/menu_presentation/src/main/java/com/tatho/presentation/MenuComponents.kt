@@ -19,7 +19,6 @@ import com.tatho.presentation.components.ItemMenu
 import com.tatho.presentation.components.TextTitleMenu
 import com.tatho.presentation.exception.MenuParentException
 
-
 @Composable
 fun MenuScreen(navegateTo: (String) -> Unit, viewModel: MenuViewModel) {
     Column(

@@ -32,10 +32,12 @@ sealed class Destinations(
 @Composable
 fun NavigationHost() {
     val navController = rememberNavController()
+    val sharedPreferences = LocalContext.current.getSharedPreferences("appPrefernece", Context.MODE_PRIVATE)
+    val uid = sharedPreferences.getString("Uid", "")
 
     NavHost(
         navController = navController,
-        startDestination = Destinations.Login.route
+        startDestination = if (uid.isNullOrBlank()) Destinations.Login.route else Destinations.Main.route
     ) {
         //singup
         composable(Destinations.SingUpScreen.route) {

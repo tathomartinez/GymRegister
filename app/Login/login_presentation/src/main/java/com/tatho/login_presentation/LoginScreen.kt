@@ -1,12 +1,14 @@
 package com.tatho.login_presentation
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -16,6 +18,27 @@ import com.tatho.common.theme.StringApp
 
 @Composable
 fun LoginScreen(navNext: (String) -> Unit, viewModel: LoginViewModel) {
+
+    // ...
+
+    val loginResult by viewModel.loginResult.collectAsState(null)
+
+    val context = LocalContext.current
+
+    LaunchedEffect(loginResult) {
+        loginResult?.let { result ->
+            when (result) {
+                is LoginResult.Success -> {
+                    Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
+                    navNext("main")
+                }
+                is LoginResult.Failure -> {
+                    Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -57,7 +80,6 @@ fun LoginScreen(navNext: (String) -> Unit, viewModel: LoginViewModel) {
                 )
             }
         }
-
         ButtonComponent(
             value = stringResource(id = StringApp.singUP),
             onButtonClicked = {

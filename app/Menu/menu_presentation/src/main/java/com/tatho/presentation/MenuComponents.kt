@@ -1,6 +1,5 @@
 package com.tatho.presentation
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -221,31 +220,14 @@ fun MenuScreen(navegateTo: (String) -> Unit, viewModel: MenuViewModel) {
                         menuItem.subtitle ?: "",
                         menuItem.iconRoute ?: "arrows",
                         onClick = {
-                            Log.e("subtitulo", menuItem.subtitle.toString())
                             if (menuItem.subtitle.isNullOrEmpty()) {
                                 navegateTo(menuItem.route!!)
                                 return@ItemMenu
                             }
                             viewModel.getChildrenByParentId(menuItem.id)
-                            Log.e("subtitulo", menuItem.subtitle.toString())
                         })
                 }
             }
         }
-
-//        if (snackbarVisibleState) {
-//            Snackbar(
-//                action = {
-//                    Button(onClick = {}) {
-//                        Text("MyAction")
-//                    }
-//                },
-//                modifier = Modifier
-//                    .padding(8.dp)
-//                    .constrainAs(btnRegister) {
-//                        end.linkTo(parent.end)
-//                    }
-//            ) { Text(text = "This is a snackbar!") }
-//        }
     }
 }

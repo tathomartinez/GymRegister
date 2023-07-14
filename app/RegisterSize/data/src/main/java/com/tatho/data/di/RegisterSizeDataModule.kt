@@ -1,17 +1,19 @@
 package com.tatho.data.di
 
+import com.google.firebase.firestore.FirebaseFirestore
+import com.tatho.data.repository.BodyMeasurementRepoImpl
+import com.tatho.domain.repository.BodyMeasurementRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-@InstallIn(SingletonComponent::class)
 @Module
-object RegisterSizeDataModule {
+@InstallIn(SingletonComponent::class)
+object FirebaseModule {
 
-    //TODO PROVIDERS SIZE FROM FIREBASE
     @Provides
-    fun provideString(): String {
-        return ""
+    fun provideBodyMeasurementRepository(dataSource: FirebaseFirestore): BodyMeasurementRepository {
+        return BodyMeasurementRepoImpl(dataSource)
     }
 }

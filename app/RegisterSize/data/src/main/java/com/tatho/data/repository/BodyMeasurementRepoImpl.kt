@@ -1,16 +1,27 @@
 package com.tatho.data.repository
 
-import com.tatho.data.network.IBodyMeasurementService
-import com.tatho.data.room.BodyMeasurementDao
-import com.tatho.domain.entites.BodyMeasurement
+import com.google.firebase.firestore.FirebaseFirestore
+import com.tatho.domain.model.BodyMeasurements
 import com.tatho.domain.repository.BodyMeasurementRepository
 
 class BodyMeasurementRepoImpl(
-    private val bodyMeasurementService: IBodyMeasurementService,
-    private val bodyMeasurementDao: BodyMeasurementDao
+    private val dataStore: FirebaseFirestore
 ) : BodyMeasurementRepository {
-    override suspend fun saveBodyMeasurement(bodyMeasurement: BodyMeasurement): Long {
-        return bodyMeasurementDao.insert(bodyMeasurement)
+
+    override suspend fun saveBodyMeasurement(
+        bodyMeasurement: BodyMeasurements,
+        callback: (Boolean) -> Unit
+    ) {
+
+        val document = dataStore.collection("bodyMeasurements").document()
+        document
+            .set(bodyMeasurement)
+            .addOnSuccessListener {
+                callback(true)
+            }
+            .addOnFailureListener {
+                callback(false)
+            }
     }
 
 }

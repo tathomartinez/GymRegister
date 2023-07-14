@@ -1,7 +1,7 @@
 package com.tatho.presentation.constans
 
 object UiConstants {
-    val REGISTRAMEDIDAS = "regitratus meddisa"
+    val REGISTRAMEDIDAS = "Regitra tus medidas"
     val CHEST = "Pecho"
     val WAIST = "Cintura"
     val BICEP = "Bíceps"

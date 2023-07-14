@@ -31,7 +31,6 @@ class MenuViewModel @Inject constructor(
 
     init {
         getListMenuItemsByRol("0")
-        Log.e("llego", "llego por aca")
     }
 
     private fun getListMenuItemsByRol(rol: String) {
@@ -41,7 +40,6 @@ class MenuViewModel @Inject constructor(
                     _menuItems.value = MenuState(isLoading = true)
                 }
                 is Resource.Error -> {
-                    Log.e("llego", "llego aca algun error ${it.message}")
                 }
                 is Resource.Success -> {
                     _menuItems.value = MenuState(data = it.data)

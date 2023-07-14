@@ -30,4 +30,12 @@ class MainModule {
     fun provideMenuItemDao(appDatabase: AppDatabase): MenuItemDao {
         return appDatabase.getItemMenuDao()
     }
+
+//    //firebase
+//    @Provides
+//    @Singleton
+//    fun provideFirebaseDatabase(): FirebaseDatabase {
+//        return FirebaseDatabase.getInstance()
+//    }
+
 }

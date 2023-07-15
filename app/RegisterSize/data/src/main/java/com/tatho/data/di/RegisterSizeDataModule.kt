@@ -10,7 +10,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-object FirebaseModule {
+object RegisterSizeDataModule {
 
     @Provides
     fun provideBodyMeasurementRepository(dataSource: FirebaseFirestore): BodyMeasurementRepository {

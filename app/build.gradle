@@ -68,6 +68,9 @@ dependencies {
     implementation project(path: ':app:Login:login_data')
     implementation project(path: ':app:Login:login_domain')
     implementation project(path: ':app:Login:login_presentation')
+    implementation project(path: ':app:Showsize:showsize_data')
+    implementation project(path: ':app:Showsize:showsize_domain')
+    implementation project(path: ':app:Showsize:showsize_presentation')
 
     implementation project(path: ':app:Common')
 

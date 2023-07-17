@@ -10,6 +10,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url 'https://jitpack.io'
+        }
     }
 }
 rootProject.name = "Gymregis"
@@ -35,3 +38,7 @@ include ':app:Login'
 include ':app:Login:login_data'
 include ':app:Login:login_domain'
 include ':app:Login:login_presentation'
+include ':app:Showsize'
+include ':app:Showsize:showsize_data'
+include ':app:Showsize:showsize_domain'
+include ':app:Showsize:showsize_presentation'

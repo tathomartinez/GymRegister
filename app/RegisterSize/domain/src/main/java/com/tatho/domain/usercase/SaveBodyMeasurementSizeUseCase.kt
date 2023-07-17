@@ -1,23 +1,19 @@
 package com.tatho.domain.usercase
 
-import android.content.SharedPreferences
-import android.os.Build
-import androidx.annotation.RequiresApi
-import java.time.LocalDate
-import javax.inject.Inject
+import android.util.Log
+import com.tatho.domain.model.BodyMeasurements
+import com.tatho.domain.repository.BodyMeasurementRepository
 
-class ValidateRegisterTodayUserCase @Inject constructor(
-    private val sharedPreferences: SharedPreferences
+class SaveBodyMeasurementSizeUseCase(
+    private val repository: BodyMeasurementRepository
 ) {
-     @RequiresApi(Build.VERSION_CODES.O)
-     operator fun invoke(callBack:(Boolean) -> Unit ) {
+    //Todo agregar callback de error
+    suspend operator fun invoke(bodyMeasurement: BodyMeasurements, callback: (Boolean) -> Unit) {
         try {
-            val storedDate = sharedPreferences.getString("regisToday", null)
-            val currentDate = LocalDate.now().toString()
-            callBack(currentDate == storedDate)
+            repository.saveBodyMeasurement(bodyMeasurement, callback)
+            Log.e("SAVE", "Fue invocado el caso de uso")
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 }
-

@@ -1,6 +1,5 @@
 package com.tatho.showsize_presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tatho.showsize_domain.model.BodyMeasurements

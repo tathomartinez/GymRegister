@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tatho.common.theme.fontApp
 import com.tatho.showsize_domain.model.BodyMeasurements
+import com.tatho.showsize_domain.model.toDatosList
 
 @Composable
 fun ShowSizeScreen(navegarTo: (String) -> Unit, viewModel: ShowSizeViewModel) {
@@ -26,7 +27,7 @@ fun ShowSizeScreen(navegarTo: (String) -> Unit, viewModel: ShowSizeViewModel) {
     LaunchedEffect(Unit) {
         viewModel.getShowSize()
     }
-
+//    MagnitudeChart(?: emptyList())
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center

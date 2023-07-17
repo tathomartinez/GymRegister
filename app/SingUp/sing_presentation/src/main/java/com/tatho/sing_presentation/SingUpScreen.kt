@@ -13,15 +13,15 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.tatho.common.*
 import com.tatho.common.theme.BackGroundColor
+import com.tatho.common.theme.StringApp
 import com.tatho.sing_presentation.exception.SingUpViewException
 
 @Composable
-fun SingUpScreen(navNext: () -> Unit, viewModel: SignUpViewModel) {
+fun SingUpScreen(navNext: (String) -> Unit, viewModel: SignUpViewModel) {
 
     if (viewModel.navigateToNextScreen.value) {
-        navNext()
+        navNext("main")
     }
-
 
     ConstraintLayout(
         modifier = Modifier
@@ -30,7 +30,7 @@ fun SingUpScreen(navNext: () -> Unit, viewModel: SignUpViewModel) {
             .padding(8.dp)
     ) {
 
-        val (screen, btnRegister) = createRefs()
+        val (screen, btnRegister, btnLogin) = createRefs()
 
         ConstraintLayout(
             Modifier
@@ -46,10 +46,6 @@ fun SingUpScreen(navNext: () -> Unit, viewModel: SignUpViewModel) {
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
-
-//                if (viewModel.showSuccess.value) {
-//                    AlertDialogCustom("Nuevo usuario creado")
-//                }
 
                 if (viewModel.showError.value) {
                     AlertDialogCustom("Error al Crear el usuario")
@@ -108,21 +104,35 @@ fun SingUpScreen(navNext: () -> Unit, viewModel: SignUpViewModel) {
 
         if (!viewModel.showError.value) {
             ButtonComponent(
-                value = stringResource(id = R.string.singUp),
+                value = stringResource(id = StringApp.singUP),
                 onButtonClicked = {
                     try {
                         viewModel.register()
                     } catch (e: SingUpViewException) {
                         Log.e("Error", "Muchos errores")
-                        // Manejar la excepción SingUpViewException
                     }
                 },
                 isEnabled = true,
                 modifier = Modifier
                     .constrainAs(btnRegister) {
-                        start.linkTo(screen.start)
-                        end.linkTo(screen.end)
+                        start.linkTo(screen.start, 16.dp)
+                        end.linkTo(screen.end, 16.dp)
                         bottom.linkTo(parent.bottom, margin = 24.dp)
+                    }
+            )
+
+            ButtonComponent(
+                value = stringResource(id = StringApp.login),
+                onButtonClicked = {
+                    navNext("login")
+                    // Acciones al hacer clic en el nuevo botón de logout
+                },
+                isEnabled = true,
+                modifier = Modifier
+                    .constrainAs(btnLogin) {
+                        start.linkTo(screen.start, 80.dp)
+                        end.linkTo(screen.end, 80.dp)
+                        bottom.linkTo(btnRegister.top, margin = 8.dp)
                     }
             )
         }

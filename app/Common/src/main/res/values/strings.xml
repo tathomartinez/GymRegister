@@ -9,4 +9,5 @@
     <string name="hidePasswoerd">Ocultar password</string>
     <string name="showPasswoerd">Mostrar password</string>
     <string name="singUp">Registar</string>
+    <string name="login">Login</string>
 </resources>

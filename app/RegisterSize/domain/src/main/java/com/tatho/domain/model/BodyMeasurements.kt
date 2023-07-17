@@ -8,5 +8,6 @@ data class BodyMeasurements(
     val bicep: Int,
     val gluteus: Int,
     val back: Int,
-    val date: Date
+    val date: Date,
+    val userId: String
 )

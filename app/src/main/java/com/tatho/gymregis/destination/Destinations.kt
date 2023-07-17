@@ -10,6 +10,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.tatho.login_presentation.LoginScreen
+import com.tatho.login_presentation.LoginViewModel
 import com.tatho.presentation.BodyMeasurementScreen
 import com.tatho.presentation.BodyMeasurementViewModel
 import com.tatho.presentation.MenuScreen
@@ -21,6 +23,7 @@ sealed class Destinations(
     val route: String
 ) {
     object Login : Destinations("login")
+    object SingUpScreen : Destinations("singup")
     object BodyMeasurement : Destinations("register")
     object Main : Destinations("main")
     object Wifi : Destinations("wifi")
@@ -29,18 +32,25 @@ sealed class Destinations(
 @Composable
 fun NavigationHost() {
     val navController = rememberNavController()
+    val sharedPreferences = LocalContext.current.getSharedPreferences("appPrefernece", Context.MODE_PRIVATE)
+    val uid = sharedPreferences.getString("Uid", "")
 
     NavHost(
         navController = navController,
-        startDestination = Destinations.Login.route
+        startDestination = if (uid.isNullOrBlank()) Destinations.Login.route else Destinations.Main.route
     ) {
-        composable(Destinations.Login.route) {
+        //singup
+        composable(Destinations.SingUpScreen.route) {
             val viewModel: SignUpViewModel = hiltViewModel()
+            val context = LocalContext.current
             SingUpScreen(
-                { navController.navigate(Destinations.Main.route) },
+                { route ->
+                    resolveNavigation(route, navController, context)
+                },
                 viewModel = viewModel
             )
         }
+        //main
         composable(Destinations.Main.route) {
             val viewModel: MenuViewModel = hiltViewModel()
             val context = LocalContext.current
@@ -51,11 +61,17 @@ fun NavigationHost() {
                 viewModel = viewModel,
             )
         }
+        //register
         composable(Destinations.BodyMeasurement.route) {
             val viewModel: BodyMeasurementViewModel = hiltViewModel()
             BodyMeasurementScreen(
                 { }, viewModel = viewModel,
             )
+        }
+        //login
+        composable(Destinations.Login.route) {
+            val viewModel: LoginViewModel = hiltViewModel()
+            LoginScreen({ route -> navController.navigate(route) }, viewModel = viewModel)
         }
     }
 }
@@ -63,7 +79,7 @@ fun NavigationHost() {
 fun resolveNavigation(it: String, navController: NavHostController, context: Context) {
     when (it) {
         Destinations.Wifi.route -> context.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
-        Destinations.Login.route -> navController.navigate(Destinations.Main.route)
+        Destinations.Login.route -> navController.navigate(Destinations.Login.route)
         Destinations.Main.route -> navController.navigate(Destinations.Main.route)
         Destinations.BodyMeasurement.route -> navController.navigate(Destinations.BodyMeasurement.route)
     }

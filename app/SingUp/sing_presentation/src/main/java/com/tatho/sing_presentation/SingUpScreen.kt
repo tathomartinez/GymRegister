@@ -34,6 +34,7 @@ import com.tatho.common.EmailInputCustom
 import com.tatho.common.GymEmailFieldComponent
 import com.tatho.common.GymPasswordTextFieldComponent
 import com.tatho.common.HeaderTextComponent
+import com.tatho.common.LoginButton
 import com.tatho.common.NormalTextComponent
 import com.tatho.common.PasswordInputCustom
 import com.tatho.common.theme.BASECOLOR
@@ -42,8 +43,8 @@ import com.tatho.common.theme.LightGray
 import com.tatho.common.theme.StringApp
 import com.tatho.common.theme.fontApp
 import com.tatho.common.theme.fontRegularApp
+import com.tatho.common.theme.whiteApp
 import com.tatho.sing_presentation.exception.SingUpViewException
-
 
 //@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
@@ -63,6 +64,8 @@ fun NewSignUpScreen(navNext: (String) -> Unit, viewModel: SignUpViewModel) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
+            .background(whiteApp),
+
     ) {
         val (header, titulo, subtitulo, email, password, rPassword, btnRegister, btnLogin) = createRefs()
         if (viewModel.showError.value) {
@@ -104,21 +107,21 @@ fun NewSignUpScreen(navNext: (String) -> Unit, viewModel: SignUpViewModel) {
 
             PasswordInputCustom(passwordValue, modifier = Modifier
                 .constrainAs(password) {
-                    top.linkTo(email.bottom, margin = 4.dp)
+                    top.linkTo(email.bottom, margin = 1.dp)
                     start.linkTo(parent.start, margin = 24.dp)
                     end.linkTo(parent.end, margin = 24.dp)
                     width = Dimension.fillToConstraints
                 }) { viewModel.onPasswordFieldChanged(it) }
 
             PasswordInputCustom(repeatPassword, modifier = Modifier.constrainAs(rPassword) {
-                top.linkTo(password.bottom, margin = 4.dp)
+                top.linkTo(password.bottom, margin = 1.dp)
                 start.linkTo(parent.start, margin = 24.dp)
                 end.linkTo(parent.end, margin = 24.dp)
                 width = Dimension.fillToConstraints
             }) { viewModel.onRepeatPasswordFieldChanged(it) }
 
-            CreateAccount(modifier = Modifier.constrainAs(btnLogin) {
-                bottom.linkTo(btnRegister.top, margin = 2.dp)
+            LoginButton(modifier = Modifier.constrainAs(btnLogin) {
+                bottom.linkTo(btnRegister.top, margin = 1.dp)
                 centerHorizontallyTo(parent)
             }, isEnabled = true, onButtonClicked = { navNext("login") })
 

@@ -10,6 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.tatho.common.theme.GymTheme
 import com.tatho.login_presentation.LoginScreen
 import com.tatho.login_presentation.LoginViewModel
 import com.tatho.presentation.BodyMeasurementScreen
@@ -36,7 +37,8 @@ sealed class Destinations(
 @Composable
 fun NavigationHost() {
     val navController = rememberNavController()
-    val sharedPreferences = LocalContext.current.getSharedPreferences("appPrefernece", Context.MODE_PRIVATE)
+    val sharedPreferences =
+        LocalContext.current.getSharedPreferences("appPrefernece", Context.MODE_PRIVATE)
     val uid = sharedPreferences.getString("Uid", "")
 
     NavHost(
@@ -53,12 +55,6 @@ fun NavigationHost() {
                 },
                 viewModel = viewModel
             )
-//            SingUpScreen(
-//                { route ->
-//                    resolveNavigation(route, navController, context)
-//                },
-//                viewModel = viewModel
-//            )
         }
         //main
         composable(Destinations.Main.route) {

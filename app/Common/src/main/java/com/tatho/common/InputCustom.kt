@@ -48,8 +48,6 @@ fun PasswordInputCustom(
     )
 }
 
-fun foo() {}
-
 @Composable
 private fun TrailingIconPassword(passwordVisible: MutableState<Boolean>) {
     val iconImage =
@@ -93,9 +91,9 @@ private fun InputCustom(
 ) {
     OutlinedTextField(
         value = value,
-        label = {
-            PlaceHolderTextCustom(placeholder)
-        },
+//        label = {
+//            PlaceHolderTextCustom(placeholder)
+//        },
         onValueChange = onValueChange,
         textStyle = MaterialTheme.typography.body1.copy(fontFamily = FontFamily(Font(fontRegularApp))),
         singleLine = true,

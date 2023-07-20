@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.tatho.exercise_presentation.RoutineScreen
+import com.tatho.exercise_presentation.RoutineViewModel
 import com.tatho.login_presentation.LoginScreen
 import com.tatho.login_presentation.LoginViewModel
 import com.tatho.presentation.BodyMeasurementScreen
@@ -86,7 +87,8 @@ fun NavigationHost() {
         }
 
         composable(Destinations.Routine.route) {
-            RoutineScreen()
+            val viewModel: RoutineViewModel = hiltViewModel()
+            RoutineScreen({ route -> navController.navigate(route) }, viewModel = viewModel)
         }
     }
 }

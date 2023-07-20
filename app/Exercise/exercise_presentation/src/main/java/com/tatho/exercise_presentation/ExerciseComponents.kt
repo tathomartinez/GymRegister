@@ -34,10 +34,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ConstrainedLayoutReference
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.tatho.common.theme.BASECOLOR
-import com.tatho.common.theme.GREENACTIVEAPP
 import com.tatho.common.theme.LIGTHGRAYAPP
 import com.tatho.common.theme.REDSTOPAPP
 import com.tatho.common.theme.VANISHTEXT
@@ -45,8 +43,8 @@ import com.tatho.common.theme.WHITEAPP
 import com.tatho.common.theme.fontApp
 
 @Composable
-fun RutineBotton(modifier: Modifier) {
-    var rutineActive by remember { mutableStateOf(false) }
+fun RoutineButton(modifier: Modifier, onValueChange: (Boolean) -> Unit) {
+    var isRoutineActive by remember { mutableStateOf(false) }
 
     val goColors = ButtonDefaults.buttonColors(
         backgroundColor = BASECOLOR,
@@ -64,20 +62,22 @@ fun RutineBotton(modifier: Modifier) {
 
     Button(
         onClick = {
-            rutineActive = !rutineActive
+            isRoutineActive = !isRoutineActive
+            onValueChange(isRoutineActive)
         },
-        colors = if (!rutineActive) goColors else stopColors,
+        colors = if (!isRoutineActive) goColors else stopColors,
         shape = RoundedCornerShape(8.dp),
         modifier = modifier
             .wrapContentSize()
             .padding(16.dp),
     ) {
         Text(
-            text = if (!rutineActive) "Activar Rutina" else "Parar Rutina",
+            text = if (!isRoutineActive) "Activar Rutina" else "Parar Rutina",
             fontFamily = FontFamily(Font(fontApp)),
         )
     }
 }
+
 @Composable
 fun HeaderProgress(modifier: Modifier) {
     Text(
@@ -89,48 +89,6 @@ fun HeaderProgress(modifier: Modifier) {
             color = BASECOLOR
         )
     )
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
-@Composable
-fun ExerciseComponents() {
-    ConstraintLayout(modifier = Modifier
-        .fillMaxWidth()
-        .padding(16.dp)) {
-
-        val (header, calendar, progressBarAnchor, buttonRutine, body) = createRefs()
-        HeaderProgress(modifier = Modifier.constrainAs(header) {
-            top.linkTo(parent.top, 24.dp)
-        })
-        CalendarCustom(modifier = Modifier
-            .constrainAs(calendar) {
-                top.linkTo(header.bottom, 8.dp)
-            }
-            .fillMaxWidth())
-        CustomLinearProgress(
-            modifier = Modifier
-                .constrainAs(progressBarAnchor) {
-                    top.linkTo(calendar.bottom, 24.dp)
-                }
-                .fillMaxWidth(),
-            currentValue = 1750f, minValue = 1000f, maxValue = 2000f)
-        RutineBotton(
-            modifier = Modifier.constrainAs(buttonRutine){
-                top.linkTo(progressBarAnchor.bottom, 16.dp)
-                centerHorizontallyTo(parent)
-            }
-        )
-        Column(modifier = Modifier.constrainAs(body){
-            top.linkTo(buttonRutine.bottom, 16.dp)
-        }) {
-            ItemExercise()
-        }
-    }
-
-////        LinearProgressIndicator(progress = 0.5f)
-//        CustomLinearProgress(minValue = 1000f, maxValue = 2000f, currentValue = 1750f)
-//        RoutineScreen()
-//    }
 }
 
 @Composable
@@ -270,7 +228,11 @@ fun CalendarioItemCustom(
 
 
 @Composable
-fun ItemExercise() {
+fun ItemExercise(
+    repeticionesChange: (Int) -> Unit,
+    seriesChange: (Int) -> Unit,
+    onWeightChange: (Int) -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -297,29 +259,41 @@ fun ItemExercise() {
                 start.linkTo(leftIcon.end, 8.dp)
             })
             DropMenuCustom(
+                onItemChange = { repeticionesChange(it.toInt()) },
                 placeholder = "Repet.",
                 modifier = Modifier.constrainAs(repeticionesDropMenu) {
                     top.linkTo(text.bottom, 8.dp)
                     start.linkTo(leftIcon.end, 8.dp)
                     bottom.linkTo(parent.bottom, 8.dp)
                 })
-            DropMenuCustom(placeholder = "Series", modifier = Modifier.constrainAs(SeriesDropMenu) {
-                top.linkTo(text.bottom, 8.dp)
-                start.linkTo(repeticionesDropMenu.end, 8.dp)
-                bottom.linkTo(parent.bottom, 8.dp)
-            })
-            ContadorPeso(modifier = Modifier.constrainAs(contador) {
-                top.linkTo(text.bottom, 8.dp)
-                start.linkTo(SeriesDropMenu.end, 8.dp)
-                bottom.linkTo(parent.bottom, 8.dp)
-            })
+            DropMenuCustom(
+                onItemChange = { seriesChange(it.toInt()) },
+                placeholder = "Series", modifier = Modifier.constrainAs(SeriesDropMenu) {
+                    top.linkTo(text.bottom, 8.dp)
+                    start.linkTo(repeticionesDropMenu.end, 8.dp)
+                    bottom.linkTo(parent.bottom, 8.dp)
+                })
+            ContadorPeso(
+                initialWeight = 100, onWeightChange = { onWeightChange(it) },
+                modifier = Modifier.constrainAs(contador) {
+                    top.linkTo(text.bottom, 8.dp)
+                    start.linkTo(SeriesDropMenu.end, 8.dp)
+                    bottom.linkTo(parent.bottom, 8.dp)
+                },
+            )
         }
     }
 }
 
 @Composable
-fun DropMenuCustom(modifier: Modifier, placeholder: String) {
+fun DropMenuCustom(
+    modifier: Modifier,
+    placeholder: String,
+    item: String = "",
+    onItemChange: (String) -> Unit = {}
+) {
     var expanded by remember { mutableStateOf(false) }
+    var selectedValue by remember { mutableStateOf(item) }
 
     val menuItems = listOf("5", "6", "7", "8", "9", "10", "11", "12")
 
@@ -330,7 +304,7 @@ fun DropMenuCustom(modifier: Modifier, placeholder: String) {
         }) {
         val (leftIcon, text, rightIcon) = createRefs()
         Text(
-            text = placeholder,
+            text = if (selectedValue.isEmpty()) placeholder else "$selectedValue x", // Mostrar valor seleccionado o el placeholder
             modifier = Modifier
                 .padding(horizontal = 8.dp)
                 .constrainAs(text) {
@@ -358,22 +332,17 @@ fun DropMenuCustom(modifier: Modifier, placeholder: String) {
             onDismissRequest = { expanded = false }
         ) {
             menuItems.forEach { item ->
-//                DropdownMenuItem(onClick = {
-//                    // Handle item click here
-//                    expanded = false
-//                }) {
                 Text(
                     text = "$item x",
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
-                        .clickable { expanded = false },
-//                            .constrainAs(text) {
-//                                start.linkTo(parent.start)
-//                                centerVerticallyTo(parent)
-//                            },
+                        .clickable {
+                            expanded = false
+                            selectedValue = item
+                            onItemChange(item)
+                        },
                     color = BASECOLOR
                 )
-//                }
             }
         }
     }
@@ -382,12 +351,13 @@ fun DropMenuCustom(modifier: Modifier, placeholder: String) {
 }
 
 @Composable
-private fun ContadorPeso(modifier: Modifier) {
+private fun ContadorPeso(modifier: Modifier, initialWeight: Int, onWeightChange: (Int) -> Unit) {
+    var weight by remember { mutableStateOf(initialWeight) }
     ConstraintLayout(modifier = modifier) {
         val (leftIcon, text, rightIcon) = createRefs()
         Icon(
             imageVector = Icons.Default.RemoveCircle,
-            contentDescription = "Logout Icon",
+            contentDescription = "Remove weight Icon",
             tint = BASECOLOR,
             modifier = Modifier
                 .size(24.dp)
@@ -395,14 +365,18 @@ private fun ContadorPeso(modifier: Modifier) {
                     start.linkTo(parent.start)
                     centerVerticallyTo(parent)
                 }
+                .clickable {
+                    weight -= 10
+                    onWeightChange(weight)
+                }
         )
-        Text(text = "100Kg", Modifier.constrainAs(text) {
+        Text(text = "$weight Kg", Modifier.constrainAs(text) {
             start.linkTo(leftIcon.end)
             centerVerticallyTo(parent)
         })
         Icon(
             imageVector = Icons.Default.AddCircle,
-            contentDescription = "Logout Icon",
+            contentDescription = "Add weight Icon",
             tint = BASECOLOR,
             modifier = Modifier
                 .size(24.dp)
@@ -410,6 +384,16 @@ private fun ContadorPeso(modifier: Modifier) {
                     start.linkTo(text.end)
                     centerVerticallyTo(parent)
                 }
+                .clickable {
+                    weight += 10
+                    onWeightChange(weight)
+                }
         )
     }
+}
+
+@Preview
+@Composable
+fun ContadorPesoPreview() {
+    ContadorPeso(modifier = Modifier, initialWeight = 100, onWeightChange = {})
 }

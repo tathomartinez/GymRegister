@@ -37,7 +37,7 @@ fun MenuScreen(navegateTo: (String) -> Unit, viewModel: MenuViewModel) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        val (header, temperatureAnchor, body) = createRefs()
+        val (header, temperatureAnchor, body, back, logout) = createRefs()
         Header(modifier = Modifier.constrainAs(header) {
             top.linkTo(parent.top, 48.dp)
             centerHorizontallyTo(parent)
@@ -60,6 +60,23 @@ fun MenuScreen(navegateTo: (String) -> Unit, viewModel: MenuViewModel) {
                 }
             )
         }
+        Button(onClick = {
+             navegateTo("main")
+        }, modifier = Modifier.constrainAs(back) {
+            top.linkTo(body.bottom, 32.dp)
+            centerHorizontallyTo(parent)
+        }) {
+            Text(text = "Back")
+        }
+        Button(onClick = {
+            viewModel.logOut { navegateTo("login") }
+        }, modifier = Modifier.constrainAs(logout) {
+            top.linkTo(back.bottom, 32.dp)
+            centerHorizontallyTo(parent)
+        }) {
+            Text(text = "Logout")
+        }
+
     }
 }
 

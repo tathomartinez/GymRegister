@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.tatho.common.theme.BASECOLOR
-import com.tatho.common.theme.whiteApp
+import com.tatho.common.theme.WHITEAPP
 
 @Composable
 fun CreateAccount(
@@ -22,7 +22,7 @@ fun CreateAccount(
         modifier = modifier,
         text = "Crear cuenta",
         backgroundColor = BASECOLOR,
-        textColor = whiteApp,
+        textColor = WHITEAPP,
         onClick = onButtonClicked,
         isEnabled = isEnabled
     )
@@ -37,7 +37,7 @@ fun LoginButton(
     CustomButton(
         modifier = modifier,
         text = "Log in",
-        backgroundColor = whiteApp,
+        backgroundColor = WHITEAPP,
         textColor = BASECOLOR,
         onClick = onButtonClicked,
         isEnabled = isEnabled,

@@ -27,9 +27,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.tatho.common.theme.BASECOLOR
-import com.tatho.common.theme.VanishText
+import com.tatho.common.theme.VANISHTEXT
 import com.tatho.common.theme.fontRegularApp
-import com.tatho.common.theme.whiteApp
+import com.tatho.common.theme.WHITEAPP
 
 @Composable
 fun PasswordInputCustom(
@@ -107,10 +107,10 @@ private fun InputCustom(
             focusedLabelColor = BASECOLOR, // Color del label al enfocar
             unfocusedLabelColor = BASECOLOR, // Color del label al no estar enfocado
             cursorColor = BASECOLOR, // Color del cursor,
-            backgroundColor = whiteApp
+            backgroundColor = WHITEAPP
 
         ),
-        placeholder = { Text(text = placeholder, color = VanishText) },
+        placeholder = { Text(text = placeholder, color = VANISHTEXT) },
         keyboardOptions = KeyboardOptions(
             keyboardType = type
         ),

@@ -1,0 +1,415 @@
+package com.tatho.exercise_presentation
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Card
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.Icon
+import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.RemoveCircle
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstrainedLayoutReference
+import androidx.constraintlayout.compose.ConstraintLayout
+import com.tatho.common.theme.BASECOLOR
+import com.tatho.common.theme.GREENACTIVEAPP
+import com.tatho.common.theme.LIGTHGRAYAPP
+import com.tatho.common.theme.REDSTOPAPP
+import com.tatho.common.theme.VANISHTEXT
+import com.tatho.common.theme.WHITEAPP
+import com.tatho.common.theme.fontApp
+
+@Composable
+fun RutineBotton(modifier: Modifier) {
+    var rutineActive by remember { mutableStateOf(false) }
+
+    val goColors = ButtonDefaults.buttonColors(
+        backgroundColor = BASECOLOR,
+        contentColor = WHITEAPP,
+        disabledContentColor = Color.Gray,
+        disabledBackgroundColor = Color.Transparent,
+    )
+
+    val stopColors = ButtonDefaults.buttonColors(
+        backgroundColor = REDSTOPAPP,
+        contentColor = WHITEAPP,
+        disabledContentColor = Color.Gray,
+        disabledBackgroundColor = Color.Transparent,
+    )
+
+    Button(
+        onClick = {
+            rutineActive = !rutineActive
+        },
+        colors = if (!rutineActive) goColors else stopColors,
+        shape = RoundedCornerShape(8.dp),
+        modifier = modifier
+            .wrapContentSize()
+            .padding(16.dp),
+    ) {
+        Text(
+            text = if (!rutineActive) "Activar Rutina" else "Parar Rutina",
+            fontFamily = FontFamily(Font(fontApp)),
+        )
+    }
+}
+@Composable
+fun HeaderProgress(modifier: Modifier) {
+    Text(
+        modifier = modifier,
+        text = "Actividad Semanal",
+        style = TextStyle(
+            fontSize = 24.sp,
+            textAlign = TextAlign.Center,
+            color = BASECOLOR
+        )
+    )
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+@Composable
+fun ExerciseComponents() {
+    ConstraintLayout(modifier = Modifier
+        .fillMaxWidth()
+        .padding(16.dp)) {
+
+        val (header, calendar, progressBarAnchor, buttonRutine, body) = createRefs()
+        HeaderProgress(modifier = Modifier.constrainAs(header) {
+            top.linkTo(parent.top, 24.dp)
+        })
+        CalendarCustom(modifier = Modifier
+            .constrainAs(calendar) {
+                top.linkTo(header.bottom, 8.dp)
+            }
+            .fillMaxWidth())
+        CustomLinearProgress(
+            modifier = Modifier
+                .constrainAs(progressBarAnchor) {
+                    top.linkTo(calendar.bottom, 24.dp)
+                }
+                .fillMaxWidth(),
+            currentValue = 1750f, minValue = 1000f, maxValue = 2000f)
+        RutineBotton(
+            modifier = Modifier.constrainAs(buttonRutine){
+                top.linkTo(progressBarAnchor.bottom, 16.dp)
+                centerHorizontallyTo(parent)
+            }
+        )
+        Column(modifier = Modifier.constrainAs(body){
+            top.linkTo(buttonRutine.bottom, 16.dp)
+        }) {
+            ItemExercise()
+        }
+    }
+
+////        LinearProgressIndicator(progress = 0.5f)
+//        CustomLinearProgress(minValue = 1000f, maxValue = 2000f, currentValue = 1750f)
+//        RoutineScreen()
+//    }
+}
+
+@Composable
+fun CalendarCustom(
+    modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier) {
+
+        CalendarioItemCustom(dia = "dom", date = "16", now = false, modifier = Modifier.weight(1f))
+        CalendarioItemCustom(dia = "lun", date = "17", now = false, modifier = Modifier.weight(1f))
+        CalendarioItemCustom(dia = "mar", date = "18", now = false, modifier = Modifier.weight(1f))
+        CalendarioItemCustom(dia = "mie", date = "19", now = false, modifier = Modifier.weight(1f))
+        CalendarioItemCustom(dia = "jue", date = "20", now = true, modifier = Modifier.weight(1f))
+        CalendarioItemCustom(dia = "vie", date = "21", now = false, modifier = Modifier.weight(1f))
+        CalendarioItemCustom(dia = "sab", date = "22", now = false, modifier = Modifier.weight(1f))
+    }
+}
+
+@Composable
+fun CustomLinearProgress(
+    currentValue: Float,
+    minValue: Float,
+    maxValue: Float,
+    color: Color = BASECOLOR,
+    modifier: Modifier = Modifier
+) {
+    val progress = calculateProgress(minValue, maxValue, currentValue)
+    ConstraintLayout(modifier = modifier) {
+        val (text, minValueAnchor, maxValueAnchor, progressBar) = createRefs()
+        Text(
+            text = "Puntos Semanales",
+            style = TextStyle(
+                textAlign = TextAlign.Center,
+                color = BASECOLOR,
+                fontSize = 24.sp
+            ),
+            modifier = Modifier.constrainAs(text) {
+                top.linkTo(parent.top)
+                start.linkTo(parent.start)
+            }
+        )
+        LinearProgressIndicator(
+            progress = progress,
+            color = color,
+            backgroundColor = VANISHTEXT,
+            modifier = Modifier
+                .fillMaxWidth()
+                .constrainAs(progressBar) {
+                    top.linkTo(text.bottom, 8.dp)
+                    start.linkTo(parent.start)
+                }
+        )
+        Text(
+            text = "${currentValue.toInt()} pts",
+            style = TextStyle(
+                textAlign = TextAlign.Center,
+                color = BASECOLOR,
+                fontSize = 12.sp
+            ),
+            modifier = Modifier.constrainAs(minValueAnchor) {
+                top.linkTo(progressBar.bottom)
+                start.linkTo(parent.start)
+            }
+        )
+        Text(
+            text = "${maxValue.toInt()} pts",
+            style = TextStyle(
+                textAlign = TextAlign.Center,
+                color = LIGTHGRAYAPP,
+                fontSize = 12.sp
+            ),
+            modifier = Modifier.constrainAs(maxValueAnchor) {
+                top.linkTo(progressBar.bottom)
+                end.linkTo(parent.end)
+            }
+        )
+    }
+
+}
+
+@Composable
+fun calculateProgress(minValue: Float, maxValue: Float, currentValue: Float): Float {
+    return (currentValue - minValue) / (maxValue - minValue)
+}
+
+@Composable
+fun CalendarioItemCustom(
+    modifier: Modifier = Modifier,
+    dia: String = "mon",
+    date: String = "00",
+    now: Boolean = false
+) {
+    val colorBg = if (now) BASECOLOR else WHITEAPP
+    val colorText = if (now) WHITEAPP else LIGTHGRAYAPP
+
+    Card(
+        modifier = modifier,
+        backgroundColor = colorBg
+    ) {
+        ConstraintLayout(
+            modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+        ) {
+            val (label, number) = createRefs()
+            Text(
+                text = dia,
+                modifier = Modifier.constrainAs(label) {
+                    top.linkTo(parent.top, 2.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    centerHorizontallyTo(parent)
+                },
+                style = TextStyle(
+                    textAlign = TextAlign.Center,
+                    color = colorText,
+                    fontSize = 16.sp
+                )
+            )
+            Text(
+                text = date,
+                modifier = Modifier.constrainAs(number) {
+                    top.linkTo(label.bottom, 1.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end, 8.dp)
+                    centerHorizontallyTo(parent)
+                },
+                style = TextStyle(
+                    textAlign = TextAlign.Center,
+                    color = colorText,
+                    fontSize = 24.sp,
+                    fontFamily = FontFamily(Font(fontApp))
+                )
+            )
+        }
+
+    }
+}
+
+
+@Composable
+fun ItemExercise() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        ConstraintLayout {
+            val (leftIcon, text, repeticionesDropMenu, SeriesDropMenu, contador) = createRefs()
+            Card(modifier = Modifier
+                .size(64.dp)
+                .constrainAs(leftIcon) {
+                    start.linkTo(parent.start)
+                    centerVerticallyTo(parent)
+                }) {
+                Icon(
+                    imageVector = Icons.Default.ArrowDropDown,
+                    contentDescription = "Logout Icon",
+                    tint = BASECOLOR,
+                )
+            }
+            Text(text = "Sentadilla", style = TextStyle(
+                textAlign = TextAlign.Center,
+                fontSize = 16.sp,
+            ), modifier = Modifier.constrainAs(text) {
+                top.linkTo(parent.top, 8.dp)
+                start.linkTo(leftIcon.end, 8.dp)
+            })
+            DropMenuCustom(
+                placeholder = "Repet.",
+                modifier = Modifier.constrainAs(repeticionesDropMenu) {
+                    top.linkTo(text.bottom, 8.dp)
+                    start.linkTo(leftIcon.end, 8.dp)
+                    bottom.linkTo(parent.bottom, 8.dp)
+                })
+            DropMenuCustom(placeholder = "Series", modifier = Modifier.constrainAs(SeriesDropMenu) {
+                top.linkTo(text.bottom, 8.dp)
+                start.linkTo(repeticionesDropMenu.end, 8.dp)
+                bottom.linkTo(parent.bottom, 8.dp)
+            })
+            ContadorPeso(modifier = Modifier.constrainAs(contador) {
+                top.linkTo(text.bottom, 8.dp)
+                start.linkTo(SeriesDropMenu.end, 8.dp)
+                bottom.linkTo(parent.bottom, 8.dp)
+            })
+        }
+    }
+}
+
+@Composable
+fun DropMenuCustom(modifier: Modifier, placeholder: String) {
+    var expanded by remember { mutableStateOf(false) }
+
+    val menuItems = listOf("5", "6", "7", "8", "9", "10", "11", "12")
+
+    ConstraintLayout(modifier = modifier
+        .shadow(1.dp)
+        .clickable {
+            expanded = !expanded
+        }) {
+        val (leftIcon, text, rightIcon) = createRefs()
+        Text(
+            text = placeholder,
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .constrainAs(text) {
+                    start.linkTo(parent.start)
+                    centerVerticallyTo(parent)
+                },
+            color = BASECOLOR
+        )
+        Icon(
+            imageVector = Icons.Default.ArrowDropDown,
+            contentDescription = "Logout Icon",
+            tint = BASECOLOR,
+            modifier = Modifier
+                .size(24.dp)
+                .constrainAs(leftIcon) {
+                    start.linkTo(text.end, 2.dp)
+                    centerVerticallyTo(parent)
+                }
+        )
+        DropdownMenu(
+            modifier = Modifier.constrainAs(rightIcon) {
+                top.linkTo(leftIcon.top)
+            },
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            menuItems.forEach { item ->
+//                DropdownMenuItem(onClick = {
+//                    // Handle item click here
+//                    expanded = false
+//                }) {
+                Text(
+                    text = "$item x",
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                        .clickable { expanded = false },
+//                            .constrainAs(text) {
+//                                start.linkTo(parent.start)
+//                                centerVerticallyTo(parent)
+//                            },
+                    color = BASECOLOR
+                )
+//                }
+            }
+        }
+    }
+
+
+}
+
+@Composable
+private fun ContadorPeso(modifier: Modifier) {
+    ConstraintLayout(modifier = modifier) {
+        val (leftIcon, text, rightIcon) = createRefs()
+        Icon(
+            imageVector = Icons.Default.RemoveCircle,
+            contentDescription = "Logout Icon",
+            tint = BASECOLOR,
+            modifier = Modifier
+                .size(24.dp)
+                .constrainAs(leftIcon) {
+                    start.linkTo(parent.start)
+                    centerVerticallyTo(parent)
+                }
+        )
+        Text(text = "100Kg", Modifier.constrainAs(text) {
+            start.linkTo(leftIcon.end)
+            centerVerticallyTo(parent)
+        })
+        Icon(
+            imageVector = Icons.Default.AddCircle,
+            contentDescription = "Logout Icon",
+            tint = BASECOLOR,
+            modifier = Modifier
+                .size(24.dp)
+                .constrainAs(rightIcon) {
+                    start.linkTo(text.end)
+                    centerVerticallyTo(parent)
+                }
+        )
+    }
+}

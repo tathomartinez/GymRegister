@@ -39,11 +39,11 @@ import com.tatho.common.NormalTextComponent
 import com.tatho.common.PasswordInputCustom
 import com.tatho.common.theme.BASECOLOR
 import com.tatho.common.theme.BackGroundColor
-import com.tatho.common.theme.LightGray
+import com.tatho.common.theme.LIGTHGRAYAPP
 import com.tatho.common.theme.StringApp
 import com.tatho.common.theme.fontApp
 import com.tatho.common.theme.fontRegularApp
-import com.tatho.common.theme.whiteApp
+import com.tatho.common.theme.WHITEAPP
 import com.tatho.sing_presentation.exception.SingUpViewException
 
 //@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
@@ -64,7 +64,7 @@ fun NewSignUpScreen(navNext: (String) -> Unit, viewModel: SignUpViewModel) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
-            .background(whiteApp),
+            .background(WHITEAPP),
 
     ) {
         val (header, titulo, subtitulo, email, password, rPassword, btnRegister, btnLogin) = createRefs()
@@ -155,7 +155,7 @@ private fun SubtitleText(modifier: Modifier = Modifier) {
     Text(
         text = "Define un usuario y password para continuar",
         fontSize = 16.sp,
-        color = LightGray,
+        color = LIGTHGRAYAPP,
         modifier = modifier,
         fontFamily = FontFamily(Font(fontRegularApp))
     )

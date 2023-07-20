@@ -25,7 +25,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -40,11 +39,11 @@ import com.tatho.common.NormalTextComponent
 import com.tatho.common.PasswordInputCustom
 import com.tatho.common.theme.BASECOLOR
 import com.tatho.common.theme.BackGroundColor
-import com.tatho.common.theme.LightGray
+import com.tatho.common.theme.LIGTHGRAYAPP
 import com.tatho.common.theme.StringApp
 import com.tatho.common.theme.darkTheme
 import com.tatho.common.theme.fontRegularApp
-import com.tatho.common.theme.whiteApp
+import com.tatho.common.theme.WHITEAPP
 
 @Composable
 fun LoginScreen(navNext: (String) -> Unit, viewModel: LoginViewModel) {
@@ -157,7 +156,7 @@ fun HeaderRegister(modifier: Modifier = Modifier) {
         Text(
             text = "GYM",
             fontSize = 48.sp,
-            color = whiteApp
+            color = WHITEAPP
         )
     }
 }
@@ -171,7 +170,7 @@ private fun SubtitleText(modifier: Modifier = Modifier) {
         ),
         text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         fontSize = 16.sp,
-        color = LightGray,
+        color = LIGTHGRAYAPP,
         modifier = modifier
     )
 }

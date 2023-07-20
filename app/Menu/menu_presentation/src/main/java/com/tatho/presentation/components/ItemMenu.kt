@@ -9,7 +9,15 @@ import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+
+@Preview
+@Composable
+fun ItemMenuPreview() {
+    ItemMenu(title = "title", subtitle = "subtitle", directionIcon = "directionIcon"){}
+}
+
 
 @Composable
 fun ItemMenu(title: String, subtitle: String, directionIcon: String, onClick: () -> Unit) {

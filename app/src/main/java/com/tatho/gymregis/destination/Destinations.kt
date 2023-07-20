@@ -18,6 +18,7 @@ import com.tatho.presentation.MenuScreen
 import com.tatho.presentation.MenuViewModel
 import com.tatho.showsize_presentation.ShowSizeScreen
 import com.tatho.showsize_presentation.ShowSizeViewModel
+import com.tatho.sing_presentation.NewSignUpScreen
 import com.tatho.sing_presentation.SignUpViewModel
 import com.tatho.sing_presentation.SingUpScreen
 
@@ -46,12 +47,18 @@ fun NavigationHost() {
         composable(Destinations.SingUpScreen.route) {
             val viewModel: SignUpViewModel = hiltViewModel()
             val context = LocalContext.current
-            SingUpScreen(
+            NewSignUpScreen(
                 { route ->
                     resolveNavigation(route, navController, context)
                 },
                 viewModel = viewModel
             )
+//            SingUpScreen(
+//                { route ->
+//                    resolveNavigation(route, navController, context)
+//                },
+//                viewModel = viewModel
+//            )
         }
         //main
         composable(Destinations.Main.route) {

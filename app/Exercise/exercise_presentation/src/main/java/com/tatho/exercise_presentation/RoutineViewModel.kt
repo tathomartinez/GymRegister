@@ -3,6 +3,7 @@ package com.tatho.exercise_presentation
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tatho.exercise_domain.model.ExerciseModel
 import com.tatho.exercise_domain.model.RoutineModel
 import com.tatho.exercise_domain.usercase.SaveRoutineUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,31 +18,34 @@ import javax.inject.Inject
 class RoutineViewModel @Inject constructor(
     private val saveRoutineUseCase: SaveRoutineUseCase,
 ) : ViewModel() {
+
     // Crea los flujos (Flow) para repeticiones, series y peso
     private val _repeticionesState = MutableStateFlow(0)
     private val _seriesState = MutableStateFlow(0)
     private val _pesoState = MutableStateFlow(0)
     private val _error = MutableStateFlow("")
     private val _success = MutableStateFlow(false)
+    private val _itemsList = MutableStateFlow<MutableList<ExerciseModel>>(mutableListOf())
     val error: StateFlow<String> = _error.asStateFlow()
     val success: StateFlow<Boolean> = _success.asStateFlow()
+    val itemsList: StateFlow<MutableList<ExerciseModel>> = _itemsList.asStateFlow()
 
-    // Proporciona funciones de cambio para repeticiones, series y peso
-    fun onRepeticionesChange(newValue: Int) {
-        _repeticionesState.value = newValue
-    }
+    var rotine = RoutineModel(id = "0001")
 
-    fun onSeriesChange(newValue: Int) {
-        _seriesState.value = newValue
+    init {
+        _itemsList.value.add(
+            ExerciseModel(id="001",name = "Sentadilla")
+        )
+        _itemsList.value.add(
+            ExerciseModel(id="002",name = "Push app")
+        )
     }
+    //TODO LOGICA PARA TENER UN ID UNICO
 
-    fun onWeightChange(newValue: Int) {
-        _pesoState.value = newValue
-    }
 
     fun onIsRoutineActiveChanged() {
 
-        if (validateExercise()) {
+        if (!isValidateRoutine()) {
             viewModelScope.launch {
                 _error.value = "Ninguna magnitud puede ser 0"
                 delay(3000L)
@@ -51,35 +55,28 @@ class RoutineViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            val routineModel =
-                RoutineModel(_repeticionesState.value, _seriesState.value, _pesoState.value)
-            saveRoutineUseCase.invoke(routineModel) {
+            Log.e("RoutineViewModel", "$rotine")
+            saveRoutineUseCase.invoke(rotine) {
                 _success.value = it
                 viewModelScope.launch {
                     delay(3000L)
                     _success.value = false
-
                     Log.e("RoutineViewModel", "onIsRoutineActiveChanged")
                 }
             }
-
-
-            Log.e("RoutineViewModel", "onIsRoutineActiveChanged")
-            Log.e("RoutineViewModel", " rep ${_repeticionesState.value}")
-            Log.e("RoutineViewModel", " series ${_seriesState.value}")
-            Log.e("RoutineViewModel", " peso ${_pesoState.value}")
-
-
         }
     }
 
-    private fun validateExercise() =
-        _pesoState.value == 0 || _seriesState.value == 0 || _repeticionesState.value == 0
+    private fun isValidateRoutine() = rotine.listExercise.isNotEmpty()
 
-    // Exponer los flujos (Flow) como StateFlow
-    val repeticionesState: StateFlow<Int> get() = _repeticionesState
-    val seriesState: StateFlow<Int> get() = _seriesState
-    val pesoState: StateFlow<Int> get() = _pesoState
-
+    fun onItemChange(item: ExerciseModel) {
+        val existingItem = rotine.listExercise.find { it.id == item.id }
+        if (existingItem == null) {
+            rotine.listExercise.add(item)
+        } else {
+            val index = rotine.listExercise.indexOf(existingItem)
+            rotine.listExercise[index] = item
+        }
+    }
 
 }

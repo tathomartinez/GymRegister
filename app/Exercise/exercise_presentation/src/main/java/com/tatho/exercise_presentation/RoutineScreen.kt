@@ -1,10 +1,11 @@
 package com.tatho.exercise_presentation
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -39,6 +40,7 @@ fun RoutineScreen(
         val (header, calendar, progressBarAnchor, buttonRoutine, body, errorText) = createRefs()
         val error by viewModel.error.collectAsState()
         val success by viewModel.success.collectAsState()
+        val itemsList by viewModel.itemsList.collectAsState()
         HeaderProgress(modifier = Modifier.constrainAs(header) {
             top.linkTo(parent.top, 24.dp)
         })
@@ -63,14 +65,18 @@ fun RoutineScreen(
                 centerHorizontallyTo(parent)
             }
         )
-        Column(modifier = Modifier.constrainAs(body) {
-            top.linkTo(buttonRoutine.bottom, 16.dp)
-        }) {
-            ItemExercise(
-                repeticionesChange = { newValue -> viewModel.onRepeticionesChange(newValue) },
-                seriesChange = { newValue -> viewModel.onSeriesChange(newValue) },
-                onWeightChange = { newValue -> viewModel.onWeightChange(newValue) }
-            )
+        LazyColumn(
+            modifier = Modifier.constrainAs(body) {
+                top.linkTo(buttonRoutine.bottom, 16.dp)
+            }
+        ) {
+            // Lista de elementos para mostrar en LazyColumn
+            items(itemsList) { item ->
+                ItemExercise(
+                    exerciseModel = item,
+                    onItemChange = { newValue -> viewModel.onItemChange(newValue) },
+                )
+            }
         }
         LaunchedEffect(isRoutineActive) {
             if (!isRoutineActive) {

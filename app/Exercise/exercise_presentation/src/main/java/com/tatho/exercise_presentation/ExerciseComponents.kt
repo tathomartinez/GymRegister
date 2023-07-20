@@ -1,7 +1,9 @@
 package com.tatho.exercise_presentation
 
+import android.util.Log
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -41,6 +43,13 @@ import com.tatho.common.theme.REDSTOPAPP
 import com.tatho.common.theme.VANISHTEXT
 import com.tatho.common.theme.WHITEAPP
 import com.tatho.common.theme.fontApp
+import com.tatho.exercise_domain.model.ExerciseModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun RoutineButton(modifier: Modifier, onValueChange: (Boolean) -> Unit) {
@@ -229,10 +238,27 @@ fun CalendarioItemCustom(
 
 @Composable
 fun ItemExercise(
-    repeticionesChange: (Int) -> Unit,
-    seriesChange: (Int) -> Unit,
-    onWeightChange: (Int) -> Unit
+    exerciseModel: ExerciseModel,
+    onItemChange: (ExerciseModel) -> Unit
 ) {
+    var weight by remember { mutableStateOf(exerciseModel.peso) }
+    var series by remember { mutableStateOf(exerciseModel.series) }
+    var repeticiones by remember { mutableStateOf(exerciseModel.repeticiones) }
+
+    fun onValueChange() {
+        //Todo evaluar que los tres items sean diferentes a 0 y guardar los datos en un objeto ExerciseModel
+//        Log.e("Hola mundo", weight.toString())
+        if (weight != 0 && series != 0 && repeticiones != 0) {
+//            Log.e("Hola mundo", exerciseModel.toString())
+            exerciseModel.apply {
+                this.peso = weight
+                this.series = series
+                this.repeticiones = repeticiones
+            }
+            Log.e("Hola mundo", exerciseModel.toString())
+            onItemChange(exerciseModel)
+        }
+    }
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -251,7 +277,7 @@ fun ItemExercise(
                     tint = BASECOLOR,
                 )
             }
-            Text(text = "Sentadilla", style = TextStyle(
+            Text(text = exerciseModel.name, style = TextStyle(
                 textAlign = TextAlign.Center,
                 fontSize = 16.sp,
             ), modifier = Modifier.constrainAs(text) {
@@ -259,7 +285,10 @@ fun ItemExercise(
                 start.linkTo(leftIcon.end, 8.dp)
             })
             DropMenuCustom(
-                onItemChange = { repeticionesChange(it.toInt()) },
+                onItemChange = {
+                    repeticiones = it.toInt()
+                    onValueChange()
+                },
                 placeholder = "Repet.",
                 modifier = Modifier.constrainAs(repeticionesDropMenu) {
                     top.linkTo(text.bottom, 8.dp)
@@ -267,17 +296,24 @@ fun ItemExercise(
                     bottom.linkTo(parent.bottom, 8.dp)
                 })
             DropMenuCustom(
-                onItemChange = { seriesChange(it.toInt()) },
+                onItemChange = {
+                    series = it.toInt()
+                    onValueChange()
+                },
                 placeholder = "Series", modifier = Modifier.constrainAs(SeriesDropMenu) {
                     top.linkTo(text.bottom, 8.dp)
                     start.linkTo(repeticionesDropMenu.end, 8.dp)
                     bottom.linkTo(parent.bottom, 8.dp)
                 })
             ContadorPeso(
-                initialWeight = 100, onWeightChange = { onWeightChange(it) },
+                initialWeight = exerciseModel.peso,
+                onWeightChange = {
+                    weight = it
+                    onValueChange()
+                },
                 modifier = Modifier.constrainAs(contador) {
                     top.linkTo(text.bottom, 8.dp)
-                    start.linkTo(SeriesDropMenu.end, 8.dp)
+                    end.linkTo(parent.end, 8.dp)
                     bottom.linkTo(parent.bottom, 8.dp)
                 },
             )
@@ -350,9 +386,12 @@ fun DropMenuCustom(
 
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ContadorPeso(modifier: Modifier, initialWeight: Int, onWeightChange: (Int) -> Unit) {
     var weight by remember { mutableStateOf(initialWeight) }
+    var job by remember { mutableStateOf<Job?>(null) } // Almacena la referencia a la corrutina
+
     ConstraintLayout(modifier = modifier) {
         val (leftIcon, text, rightIcon) = createRefs()
         Icon(
@@ -365,10 +404,27 @@ private fun ContadorPeso(modifier: Modifier, initialWeight: Int, onWeightChange:
                     start.linkTo(parent.start)
                     centerVerticallyTo(parent)
                 }
-                .clickable {
-                    weight -= 10
-                    onWeightChange(weight)
-                }
+                .combinedClickable(
+                    onClick = {
+                        if (weight >= 10) { // Verificar que el peso sea mayor o igual a 10 antes de disminuirlo
+                            weight -= 10
+                            onWeightChange(weight)
+                        }
+                    },
+                    onLongClick = {
+                        job = CoroutineScope(Dispatchers.Default).launch {
+                            while (true) {
+                                delay(100) // Ajusta el tiempo para el efecto deseado
+                                weight -= 10
+                                withContext(Dispatchers.Main) {
+                                    onWeightChange(weight)
+                                }
+                            }
+                        }
+                    },
+
+                )
+
         )
         Text(text = "$weight Kg", Modifier.constrainAs(text) {
             start.linkTo(leftIcon.end)

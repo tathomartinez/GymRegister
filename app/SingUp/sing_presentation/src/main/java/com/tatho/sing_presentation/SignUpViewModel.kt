@@ -84,14 +84,14 @@ class SignUpViewModel @Inject constructor(
 
     private fun validatePreRegister(email: String, password: String): Boolean {
         val repeatPassword = repeatPasswordFieldState.value
-        val checkboxChecked = checkboxChecked.value
+        val checkboxChecked = true
+//        val checkboxChecked = checkboxChecked.value
 
         Log.e("validatePreRegister", "email: $email, password: $password, repeatPassword: $repeatPassword, checkboxChecked: $checkboxChecked")
 
         return email.isNotBlank() &&
                 password.isNotBlank() &&
-                password == repeatPassword &&
-                checkboxChecked == true
+                password == repeatPassword && checkboxChecked
     }
 
 }

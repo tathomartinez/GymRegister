@@ -10,6 +10,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.tatho.exercise_presentation.RoutineScreen
+import com.tatho.exercise_presentation.RoutineViewModel
 import com.tatho.login_presentation.LoginScreen
 import com.tatho.login_presentation.LoginViewModel
 import com.tatho.presentation.BodyMeasurementScreen
@@ -18,8 +20,8 @@ import com.tatho.presentation.MenuScreen
 import com.tatho.presentation.MenuViewModel
 import com.tatho.showsize_presentation.ShowSizeScreen
 import com.tatho.showsize_presentation.ShowSizeViewModel
+import com.tatho.sing_presentation.NewSignUpScreen
 import com.tatho.sing_presentation.SignUpViewModel
-import com.tatho.sing_presentation.SingUpScreen
 
 sealed class Destinations(
     val route: String
@@ -29,13 +31,15 @@ sealed class Destinations(
     object BodyMeasurement : Destinations("register")
     object Main : Destinations("main")
     object Wifi : Destinations("wifi")
-    object ShowSizeScreen : Destinations("showsize")
+    object ShowSize : Destinations("showsize")
+    object Routine : Destinations("routine")
 }
 
 @Composable
 fun NavigationHost() {
     val navController = rememberNavController()
-    val sharedPreferences = LocalContext.current.getSharedPreferences("appPrefernece", Context.MODE_PRIVATE)
+    val sharedPreferences =
+        LocalContext.current.getSharedPreferences("appPrefernece", Context.MODE_PRIVATE)
     val uid = sharedPreferences.getString("Uid", "")
 
     NavHost(
@@ -46,7 +50,7 @@ fun NavigationHost() {
         composable(Destinations.SingUpScreen.route) {
             val viewModel: SignUpViewModel = hiltViewModel()
             val context = LocalContext.current
-            SingUpScreen(
+            NewSignUpScreen(
                 { route ->
                     resolveNavigation(route, navController, context)
                 },
@@ -76,9 +80,15 @@ fun NavigationHost() {
             val viewModel: LoginViewModel = hiltViewModel()
             LoginScreen({ route -> navController.navigate(route) }, viewModel = viewModel)
         }
-        composable(Destinations.ShowSizeScreen.route) {
+
+        composable(Destinations.ShowSize.route) {
             val viewModel: ShowSizeViewModel = hiltViewModel()
             ShowSizeScreen({ route -> navController.navigate(route) }, viewModel = viewModel)
+        }
+
+        composable(Destinations.Routine.route) {
+            val viewModel: RoutineViewModel = hiltViewModel()
+            RoutineScreen({ route -> navController.navigate(route) }, viewModel = viewModel)
         }
     }
 }
@@ -89,7 +99,8 @@ fun resolveNavigation(it: String, navController: NavHostController, context: Con
         Destinations.Login.route -> navController.navigate(Destinations.Login.route)
         Destinations.Main.route -> navController.navigate(Destinations.Main.route)
         Destinations.BodyMeasurement.route -> navController.navigate(Destinations.BodyMeasurement.route)
-        Destinations.ShowSizeScreen.route -> navController.navigate(Destinations.ShowSizeScreen.route)
+        Destinations.ShowSize.route -> navController.navigate(Destinations.ShowSize.route)
+        Destinations.Routine.route -> navController.navigate(Destinations.Routine.route)
     }
 }
 

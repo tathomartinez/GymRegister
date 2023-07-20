@@ -23,6 +23,7 @@ android {
 
     buildFeatures {
         compose true
+        dataBinding true
     }
 
     composeOptions {
@@ -71,6 +72,9 @@ dependencies {
     implementation project(path: ':app:Showsize:showsize_data')
     implementation project(path: ':app:Showsize:showsize_domain')
     implementation project(path: ':app:Showsize:showsize_presentation')
+    implementation project(path: ':app:Exercise:exercise_data')
+    implementation project(path: ':app:Exercise:exercise_domain')
+    implementation project(path: ':app:Exercise:exercise_presentation')
 
     implementation project(path: ':app:Common')
 

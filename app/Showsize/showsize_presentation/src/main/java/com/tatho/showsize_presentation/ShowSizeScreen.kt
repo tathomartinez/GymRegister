@@ -16,9 +16,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tatho.common.theme.fontApp
 import com.tatho.showsize_domain.model.BodyMeasurements
-import com.tatho.showsize_domain.model.toDatosList
 
 @Composable
 fun ShowSizeScreen(navegarTo: (String) -> Unit, viewModel: ShowSizeViewModel) {
@@ -53,32 +51,26 @@ fun ListItem(medida: BodyMeasurements) {
         ) {
             Text(
                 text = "Chest: ${medida.chest}",
-                style = TextStyle(fontFamily = FontFamily(Font(fontApp))),
                 fontSize = 16.sp
             )
             Text(
                 text = "Waist: ${medida.waist}",
-                style = TextStyle(fontFamily = FontFamily(Font(fontApp))),
                 fontSize = 16.sp
             )
             Text(
                 text = "Bicep: ${medida.bicep}",
-                style = TextStyle(fontFamily = FontFamily(Font(fontApp))),
                 fontSize = 16.sp
             )
             Text(
                 text = "Gluteus: ${medida.gluteus}",
-                style = TextStyle(fontFamily = FontFamily(Font(fontApp))),
                 fontSize = 16.sp
             )
             Text(
                 text = "Back: ${medida.back}",
-                style = TextStyle(fontFamily = FontFamily(Font(fontApp))),
                 fontSize = 16.sp
             )
             Text(
                 text = "Date: ${medida.date}",
-                style = TextStyle(fontFamily = FontFamily(Font(fontApp))),
                 fontSize = 16.sp
             )
         }

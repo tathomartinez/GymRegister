@@ -5,11 +5,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -49,14 +52,16 @@ fun TemperatureText(modifier: Modifier) {
     }
 }
 
+@Preview
 @Composable
-fun Header(modifier: Modifier) {
+fun Header(modifier: Modifier = Modifier) {
     ConstraintLayout(modifier = modifier) {
         val (holatextAnchor, nameAnchor, submenuAnchor, linea) = createRefs()
         val name = "Tatho"
         Text(
             text = "Hola",
-            style = TextStyle(
+            style =
+            TextStyle(
                 textAlign = TextAlign.Center,
                 color = BASECOLOR,
                 fontSize = 32.sp
@@ -70,7 +75,8 @@ fun Header(modifier: Modifier) {
             style = TextStyle(
                 textAlign = TextAlign.Center,
                 color = BASECOLOR,
-                fontSize = 40.sp
+                fontSize = 40.sp,
+                fontWeight = FontWeight.Bold,
             ),
             modifier = Modifier.constrainAs(nameAnchor) {
                 top.linkTo(holatextAnchor.bottom)

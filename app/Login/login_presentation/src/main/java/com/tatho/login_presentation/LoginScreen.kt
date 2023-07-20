@@ -42,7 +42,6 @@ import com.tatho.common.theme.BackGroundColor
 import com.tatho.common.theme.LIGTHGRAYAPP
 import com.tatho.common.theme.StringApp
 import com.tatho.common.theme.darkTheme
-import com.tatho.common.theme.fontRegularApp
 import com.tatho.common.theme.WHITEAPP
 
 @Composable
@@ -110,7 +109,6 @@ fun LoginScreen(navNext: (String) -> Unit, viewModel: LoginViewModel) {
         Text(text = "Ovide la contraseña",
             style = TextStyle(
                 textAlign = TextAlign.Center,
-                fontFamily = FontFamily(Font(fontRegularApp)),
             ),
             modifier = Modifier.constrainAs(textLink) {
                 top.linkTo(password.bottom, margin = 24.dp)
@@ -127,8 +125,6 @@ fun LoginScreen(navNext: (String) -> Unit, viewModel: LoginViewModel) {
         Text(text = "Registrarse",
             style = TextStyle(
                 textAlign = TextAlign.Center,
-                //surayar
-                fontFamily = FontFamily(Font(fontRegularApp)),
             ),
             color = BASECOLOR,
             modifier = Modifier
@@ -166,7 +162,6 @@ private fun SubtitleText(modifier: Modifier = Modifier) {
     Text(
         style = TextStyle(
             textAlign = TextAlign.Center,
-            fontFamily = FontFamily(Font(fontRegularApp)),
         ),
         text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         fontSize = 16.sp,

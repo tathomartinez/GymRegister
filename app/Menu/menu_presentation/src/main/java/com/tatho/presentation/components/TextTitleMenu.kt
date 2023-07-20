@@ -17,7 +17,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tatho.common.theme.PrimaryColor
-import com.tatho.common.theme.fontApp
 import com.tatho.logout_presentation.LogoutIcon
 
 @Composable
@@ -56,7 +55,6 @@ fun TextTitleMenu(back: () -> Unit, logOut: ()-> Unit) {
             style = TextStyle(
                 fontSize = 24.sp,
                 lineHeight = 30.sp,
-                fontFamily = FontFamily(Font(fontApp)),
                 fontWeight = FontWeight(700),
                 color = PrimaryColor,
                 letterSpacing = 0.25.sp,

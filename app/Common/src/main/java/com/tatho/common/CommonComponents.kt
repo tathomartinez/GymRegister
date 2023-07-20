@@ -377,7 +377,6 @@ fun AlertDialogCustom(text: String) {
                     text = text,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(8.dp),
-                    fontFamily = FontFamily(Font(fontApp)),
                     fontSize = 18.sp
                 )
             }

@@ -42,7 +42,6 @@ import com.tatho.common.theme.LIGTHGRAYAPP
 import com.tatho.common.theme.REDSTOPAPP
 import com.tatho.common.theme.VANISHTEXT
 import com.tatho.common.theme.WHITEAPP
-import com.tatho.common.theme.fontApp
 import com.tatho.exercise_domain.model.ExerciseModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -82,7 +81,6 @@ fun RoutineButton(modifier: Modifier, onValueChange: (Boolean) -> Unit) {
     ) {
         Text(
             text = if (!isRoutineActive) "Activar Rutina" else "Parar Rutina",
-            fontFamily = FontFamily(Font(fontApp)),
         )
     }
 }
@@ -93,7 +91,7 @@ fun HeaderProgress(modifier: Modifier) {
         modifier = modifier,
         text = "Actividad Semanal",
         style = TextStyle(
-            fontSize = 24.sp,
+            fontSize = 32.sp,
             textAlign = TextAlign.Center,
             color = BASECOLOR
         )
@@ -227,7 +225,6 @@ fun CalendarioItemCustom(
                     textAlign = TextAlign.Center,
                     color = colorText,
                     fontSize = 24.sp,
-                    fontFamily = FontFamily(Font(fontApp))
                 )
             )
         }

@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -41,8 +42,6 @@ import com.tatho.common.theme.BASECOLOR
 import com.tatho.common.theme.BackGroundColor
 import com.tatho.common.theme.LIGTHGRAYAPP
 import com.tatho.common.theme.StringApp
-import com.tatho.common.theme.fontApp
-import com.tatho.common.theme.fontRegularApp
 import com.tatho.common.theme.WHITEAPP
 import com.tatho.sing_presentation.exception.SingUpViewException
 
@@ -146,7 +145,6 @@ private fun TitleText(modifier: Modifier = Modifier) {
         fontSize = 16.sp,
         color = Color.Black,
         modifier = modifier,
-        fontFamily = FontFamily(Font(fontApp))
     )
 }
 
@@ -157,10 +155,10 @@ private fun SubtitleText(modifier: Modifier = Modifier) {
         fontSize = 16.sp,
         color = LIGTHGRAYAPP,
         modifier = modifier,
-        fontFamily = FontFamily(Font(fontRegularApp))
     )
 }
 
+@Preview
 @Composable
 fun HeaderRegister(modifier: Modifier = Modifier) {
     Column(

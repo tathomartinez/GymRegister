@@ -28,7 +28,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.tatho.common.theme.BASECOLOR
 import com.tatho.common.theme.VANISHTEXT
-import com.tatho.common.theme.fontRegularApp
 import com.tatho.common.theme.WHITEAPP
 
 @Composable
@@ -95,7 +94,7 @@ private fun InputCustom(
 //            PlaceHolderTextCustom(placeholder)
 //        },
         onValueChange = onValueChange,
-        textStyle = MaterialTheme.typography.body1.copy(fontFamily = FontFamily(Font(fontRegularApp))),
+        textStyle = MaterialTheme.typography.body1,
         singleLine = true,
         modifier = modifier
             .fillMaxWidth()
